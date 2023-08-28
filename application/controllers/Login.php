@@ -23,9 +23,11 @@ class Login extends CI_Controller
 
     public function login_user()
     {
+        
         // Form validation rules
         $this->form_validation->set_rules('email', 'Email', 'trim|required');
         $this->form_validation->set_rules('password', 'Password', 'trim|required');
+        
 
         if ($this->form_validation->run() === FALSE) {
             // Validation failed, reload the login form with errors
@@ -45,14 +47,14 @@ class Login extends CI_Controller
                 // Set user session and redirect to user controller
                 $this->session->set_userdata('user_id', $user->_id);
                 $this->session->set_userdata('name', $user->name);
-
+           
 
 
 
 
                 $this->session->set_flashdata('user_loggedin', 'You are now logged in');
 
-                redirect("usercontroller/index");
+                redirect("pages/view");
             } else {
                 // Login failed, handle the error
                 $this->session->set_flashdata('login_error', 'Wrong Username or Password. Please try again.');
