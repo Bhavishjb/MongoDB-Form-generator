@@ -5,114 +5,22 @@ defined('BASEPATH') or exit('No direct script access allowed');
 class User_model extends CI_model
 {
 
-    private $database = 'College-DataBase';
-    private $collection = 'College_register';
+    public $database = 'College-DataBase';
+    public $collection = 'College_register';
     private $conn;
 
-    function __construct()
+     public function __construct()
     {
         parent::__construct();
         $this->load->library('mongodb');
         $this->conn = $this->mongodb->getConn();
     }
 
-    function get_user_list()
-    {
-        try {
-            $filter = [];
-            $query = new MongoDB\Driver\Query($filter);
-
-            $result = $this->conn->executeQuery($this->database . '.' . $this->collection, $query);
-
-            return $result;
-        } catch (MongoDB\Driver\Exception\RuntimeException $ex) {
-            show_error('Error while fetching users: ' . $ex->getMessage(), 500);
-        }
-    }
-
-
-    function get_user($_id)
-    {
-        try {
-            $filter = ['_id' => new MongoDB\BSON\ObjectId($_id)];
-            $query = new MongoDB\Driver\Query($filter);
-
-            $result = $this->conn->executeQuery($this->database . '.' . $this->collection, $query);
-
-            foreach ($result as $user) {
-                return $user;
-            }
-
-            return NULL;
-        } catch (MongoDB\Driver\Exception\RuntimeException $ex) {
-            show_error('Error while fetching user: ' . $ex->getMessage(), 500);
-        }
-    }
-
-    function create_user($name, $email, $gender, $mobile)
-    {
-        try {
-            $user = array(
-                'name' => $name,
-                'email' => $email,
-                'gender' => $gender, // Add 'gender'
-                'mobile' => $mobile // Add 'mobile'
-            );
-
-            $query = new MongoDB\Driver\BulkWrite();
-            $query->insert($user);
-
-            $result = $this->conn->executeBulkWrite($this->database . '.' . $this->collection, $query);
-
-            if ($result == 1) {
-                return TRUE;
-            }
-
-            return FALSE;
-        } catch (MongoDB\Driver\Exception\RuntimeException $ex) {
-            show_error('Error while saving users: ' . $ex->getMessage(), 500);
-        }
-    }
-
-    function update_user($_id, $name, $email, $gender, $mobile)
-    {
-        try {
-            $query = new MongoDB\Driver\BulkWrite();
-            $query->update(['_id' => new MongoDB\BSON\ObjectId($_id)], ['$set' => array('name' => $name, 'email' => $email, 'gender' => $gender, 'mobile' => $mobile)]);
-
-            $result = $this->conn->executeBulkWrite($this->database . '.' . $this->collection, $query);
-
-            if ($result == 1) {
-                return TRUE;
-            }
-
-            return FALSE;
-        } catch (MongoDB\Driver\Exception\RuntimeException $ex) {
-            show_error('Error while updating users: ' . $ex->getMessage(), 500);
-        }
-    }
-
-    function delete_user($_id)
-    {
-        try {
-            $query = new MongoDB\Driver\BulkWrite();
-            $query->delete(['_id' => new MongoDB\BSON\ObjectId($_id)]);
-
-            $result = $this->conn->executeBulkWrite($this->database . '.' . $this->collection, $query);
-
-            if ($result == 1) {
-                return TRUE;
-            }
-
-            return FALSE;
-        } catch (MongoDB\Driver\Exception\RuntimeException $ex) {
-            show_error('Error while deleting users: ' . $ex->getMessage(), 500);
-        }
-    }
     public function get_user_by_email($email)
     {
         try {
             //$collectionName = 'user_registration';
+            $collection = 'College_register';
             $filter = ['email' => $email];
             $query = new MongoDB\Driver\Query($filter);
 
@@ -128,7 +36,7 @@ class User_model extends CI_model
         }
     }
 
-    function register_user($name, $email, $password)
+     public function register_user($name, $email, $password)
     {
         try {
             $user = array(
