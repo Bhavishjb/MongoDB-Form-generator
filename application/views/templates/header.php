@@ -25,7 +25,7 @@
 <body>
     <nav class="navbar navbar-expand-lg bg-primary" data-bs-theme="dark">
         <div class="container-fluid">
-            <a class="navbar-brand" href="<?php echo base_url('usercontroller/index'); ?>">USER</a>
+            <a class="navbar-brand"  href="<?php echo base_url('/FormController/index'); ?>">USER</a>
             <button class="navbar-toggler collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#navbarColor01" aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
@@ -33,7 +33,7 @@
             <div class="navbar-collapse collapse" id="navbarColor01">
                 <ul class="navbar-nav me-auto">
                     <li class="nav-item">
-                        <a class="nav-link" href="<?php echo base_url('usercontroller/index'); ?>">HOME
+                        <a class="nav-link" href="<?php echo base_url('/FormController/index'); ?>">HOME
                             <span class="visually-hidden">(current)</span>
                         </a>
                     </li>
