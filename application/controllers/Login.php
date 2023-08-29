@@ -54,7 +54,7 @@ class Login extends CI_Controller
 
                 $this->session->set_flashdata('user_loggedin', 'You are now logged in');
 
-                redirect("pages/view");
+                redirect("/FormController/index");
             } else {
                 // Login failed, handle the error
                 $this->session->set_flashdata('login_error', 'Wrong Username or Password. Please try again.');
