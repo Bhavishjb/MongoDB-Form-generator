@@ -15,6 +15,14 @@
                     <div class="card-body">
                         <div class="container">
                             <h2 style="text-align:center;">Create Your Form</h2>
+                            <?php
+                                $user_id = $this->session->userdata('user_id');
+                                if ($user_id !== null) {
+                                    echo "User ID: " . $user_id;
+                                } else {
+                                    echo "User ID not set.";
+                                }
+                                ?>
                             <form action="index" method="post" id="form-generator-form">
                                 <div class="mb-3">
                                     <label for="form_title" class="form-label">Form Title:</label>
@@ -160,10 +168,21 @@ function toggleInputSpecific(inputSpecificDiv, fieldType) {
             <input type="file" class="form-control" name="input[]" placeholder="Choose File">
         `;
     }
-     else {
+     else if (fieldType === 'Textbox'){
         inputSpecificDiv.innerHTML = `
             <label class="form-label">Input:</label>
             <input type="text" class="form-control" name="input[]" placeholder="Enter Input">
+        `;
+    }
+    else if (fieldType === 'Email'){
+        inputSpecificDiv.innerHTML = `
+            <label class="form-label">Input:</label>
+            <input type="email" class="form-control" name="input[]" placeholder="Enter Input">
+        `;
+    }
+    else {
+        inputSpecificDiv.innerHTML = `
+            <label class="form-label">Input:</label>
         `;
     }
 }

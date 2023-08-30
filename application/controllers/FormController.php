@@ -4,8 +4,8 @@ defined('BASEPATH') or exit('No direct script access allowed');
 class FormController extends CI_Controller {
     public function __construct() {
         parent::__construct();
-        $this->load->model('Forms_model'); // Load the Forms_model
-        $this->load->model('Fields_model'); // Load the Fields_model
+        $this->load->model('Forms_model'); 
+        $this->load->model('Fields_model'); 
         $this->load->library('form_validation');
     }
 
@@ -16,12 +16,12 @@ class FormController extends CI_Controller {
         // Handle form submission
         if ($this->input->post()) {
             // Collect form data
-            $clg_id = $this->session->userdata('user_id'); // Correct way to get user_id from session
+            $clg_id = $this->session->userdata('user_id');
             $form_title = $this->input->post('form_title');
             $form_description = $this->input->post('form_description');
-            $field_labels = $this->input->post('field_label'); // Assuming you're sending an array of field labels
-            $field_types = $this->input->post('field_type'); // Assuming you're sending an array of field types
-            $option_values = $this->input->post('option_value'); // Assuming you're sending an array of option values
+            $field_labels = $this->input->post('field_label'); 
+            $field_types = $this->input->post('field_type'); 
+            $option_values = $this->input->post('option_value'); 
             
             // Create an array to hold the form data
             $form_data = array(
@@ -39,7 +39,10 @@ class FormController extends CI_Controller {
                 );
     
                 if (in_array($field_types[$i], array('Dropdown', 'Checkbox', 'Radio'))) {
-                    $field['options'] = $option_values[$i];
+                    //$field['options'] = $option_values[$i];
+                    foreach ($option_values[$i] as $index => $option) {
+                        $field['options'] = $option_values[0][$i];
+                    }
                 }
     
                 $form_data['fields'][] = $field;
