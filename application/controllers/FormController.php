@@ -21,7 +21,10 @@ class FormController extends CI_Controller {
             $form_description = $this->input->post('form_description');
             $field_labels = $this->input->post('field_label'); 
             $field_types = $this->input->post('field_type'); 
-            $option_values = $this->input->post('option_value'); 
+            $option_values = $this->input->post('option_value');
+            $required = $this->input->post('field_required');
+            $size_length = $this->input->post('size_length');
+
             
             // Create an array to hold the form data
             $form_data = array(
@@ -30,31 +33,38 @@ class FormController extends CI_Controller {
                 'form_description' => $form_description,
                 'fields' => array(),
             );
-    
-            
+
             for ($i = 0; $i < count($field_labels); $i++) {
+                if (!($size_length[$i])) {
+                    $size_length[$i] = 255;
+                }
+            }
+            for ($i = 0; $i < count($field_labels); $i++) {
+                
                 $field = array(
                     'field_label' => $field_labels[$i],
                     'field_type' => $field_types[$i],
+                    'field_required' =>  $required[$i],
+                    'size_length' => $size_length[$i],
                 );
-    
+            
                 if (in_array($field_types[$i], array('Dropdown', 'Checkbox', 'Radio'))) {
-                    //$field['options'] = $option_values[$i];
-                    foreach ($option_values[$i] as $index => $option) {
-                        $field['options'] = $option_values[0][$i];
+                    $field_options = array();
+                    for ($j = 0; $j < count($option_values[$i]); $j++) {
+                        $field_options[] = $option_values[$i][$j];
                     }
+                    $field['options'] = $field_options;
                 }
-    
                 $form_data['fields'][] = $field;
-            }
+            }                      
     
             $insert_result = $this->Forms_model->create_form($form_data);
             
             if ($insert_result) {
-                
+                //var_dump($option_values);
                 redirect('home');
             } else {
-                
+                //var_dump($option_values);
                 redirect('home');
             }
         }
@@ -64,6 +74,7 @@ class FormController extends CI_Controller {
         $this->load->view('form_builder');
         $this->load->view('templates/footer');
     }
+    
     
 
     public function view_forms() {

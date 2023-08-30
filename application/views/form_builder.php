@@ -51,22 +51,27 @@
         </div>
     </div>
 
-<script>document.addEventListener('DOMContentLoaded', function () {
-    const addFieldButton = document.getElementById('add-field-button');
-    const formFieldsContainer = document.getElementById('form-fields-container');
+    <script>
+document.addEventListener('DOMContentLoaded', function () {
+        const addFieldButton = document.getElementById('add-field-button');
+        const formFieldsContainer = document.getElementById('form-fields-container');
+        let j = 0; // Declare the variable j
 
-    addFieldButton.addEventListener('click', function () {
-        addFormInputField(formFieldsContainer);
+        addFieldButton.addEventListener('click', function () {
+            addFormInputField(formFieldsContainer, j); // Pass j to the function
+            j++; // Increment j for the next field
+        });
+
+        // Initial field
+        addFormInputField(formFieldsContainer, j); // Pass j to the function
+        j++; // Increment j for the next field
     });
 
-    // Initial field
-    addFormInputField(formFieldsContainer);
-});
-
-function addFormInputField(container) {
+function addFormInputField(container,j) {
     const fieldDiv = document.createElement('div');
     fieldDiv.className = 'mb-4';
-
+    let fieldIndex=0;
+    fieldDiv.setAttribute('data-field-index', j)
     fieldDiv.innerHTML = `
         <label for="field_label" class="form-label">Field Label:</label>
         <input type="text" class="form-control mb-4" name="field_label[]" required>
@@ -84,7 +89,7 @@ function addFormInputField(container) {
         </select>
 
         <div class="input-specific mt-2">
-            <!-- Input field will be added here based on selection -->
+        <!-- Input field will be added here based on selection -->
         </div>
 
         <div class="size-length mt-2">
@@ -98,7 +103,7 @@ function addFormInputField(container) {
                 <div class="option-field">
                     <div class="row">
                         <div class="col-md-5">
-                            <input type="text" class="form-control " name="option_value[][0]" placeholder="Option Value">
+                        <input type="text" class="form-control" name="option_value[${j}][]" placeholder="Option Value">
                         </div>
                         <div class="col-md-2">
                             <button type="button" class="btn btn-sm btn-danger remove-option">Remove</button>
@@ -127,6 +132,7 @@ function addFormInputField(container) {
     const optionsDiv = fieldDiv.querySelector('.options');
 
     fieldTypeSelect.addEventListener('change', function () {
+        j++;
         toggleInputSpecific(inputSpecificDiv, this.value);
         toggleSizeLength(sizeLengthDiv, this.value);
         toggleOptions(optionsDiv, this.value);
@@ -206,10 +212,12 @@ function toggleOptions(optionsDiv, fieldType) {
 function addOptionField(optionsDiv) {
     const optionField = document.createElement('div');
     optionField.className = 'option-field';
+    const fieldIndex = optionsDiv.closest('.mb-4').getAttribute('data-field-index');
+
     optionField.innerHTML = `
         <div class="row">
             <div class="col-md-5">
-                <input type="text" class="form-control" name="option_value[][0]" placeholder="Option Value">
+                <input type="text" class="form-control" name="option_value[${fieldIndex}][]" placeholder="Option Value">
             </div>
             <div class="col-md-2">
                 <button type="button" class="btn btn-sm btn-danger remove-option">Remove</button>
@@ -230,7 +238,7 @@ function removeOptionField(button) {
 
 function removeField(button) {
     button.closest('.mb-4').remove();
-}</script>
+}
+</script>
 </body>
-
 </html>
