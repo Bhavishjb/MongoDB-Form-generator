@@ -98,7 +98,7 @@ class User_model extends CI_model
     }
 
 
-    private function createCollectionIfNotExists($collectionName)
+    public function createCollectionIfNotExists($collectionName)
     {
         $command = new MongoDB\Driver\Command([
             'create' => $collectionName,
