@@ -7,7 +7,7 @@
    
 </head>
 
-<body>
+<body ">
     <div class="container mt-5">
         <div class="row justify-content-center">
             <div class="col-md-10">
@@ -16,7 +16,7 @@
                         <div class="container">
                             <h2 style="text-align:center;">Create Your Form</h2>
                             <form action="index" method="post" id="form-generator-form">
-                                <div class="mb-3">
+                                <div class="mb-4">
                                     <label for="form_title" class="form-label">Form Title:</label>
                                     <input type="text" class="form-control" name="form_title" required>
                                 </div>
@@ -28,13 +28,13 @@
 
                                 <h3>Form Fields</h3>
 
-                                <div class="form-group" id="form-fields-container">
+                                <div class="form-group mt-4" id="form-fields-container">
                                     <!-- Fields will be added here -->
                                 </div>
 
-                                <button type="button" class="btn btn-primary mb-3" id="add-field-button">Add Field</button>
+                                <button type="button" class="btn btn-primary btn-lg me-4 mt-3 mb-4" id="add-field-button">Add Field</button>
 
-                                <button type="submit" class="btn btn-success mb-3">Save Form</button>
+                                <button type="submit" class="btn btn-success btn-lg mt-3 mb-4">Save Form</button>
                             </form>
                         </div>
                     </div>
@@ -61,11 +61,11 @@ function addFormInputField(container) {
 
     fieldDiv.innerHTML = `
         <label for="field_label" class="form-label">Field Label:</label>
-        <input type="text" class="form-control" name="field_label[]" required>
+        <input type="text" class="form-control mb-4" name="field_label[]" required>
 
         <label for="field_type" class="form-label mt-2">Input Type:</label>
-        <select class="form-control" name="field_type[]">
-            <option value="Textbox">Textbox</option>
+        <select class="form-select mb-4" name="field_type[]">
+            <option  value="Textbox">Textbox</option>
             <option value="Dropdown">Dropdown</option>
             <option value="Date">Date</option>
             <option value="Email">Email</option>
@@ -80,7 +80,7 @@ function addFormInputField(container) {
         </div>
 
         <div class="size-length mt-2">
-            <label class="form-label">Size/Length:</label>
+            <label class="form-label mt-4">Size/Length:</label>
             <input type="text" class="form-control" name="size_length[]" placeholder="Enter Size/Length">
         </div>
 
@@ -90,7 +90,7 @@ function addFormInputField(container) {
                 <div class="option-field">
                     <div class="row">
                         <div class="col-md-5">
-                            <input type="text" class="form-control" name="option_value[][0]" placeholder="Option Value">
+                            <input type="text" class="form-control " name="option_value[][0]" placeholder="Option Value">
                         </div>
                         <div class="col-md-2">
                             <button type="button" class="btn btn-sm btn-danger remove-option">Remove</button>
@@ -101,13 +101,13 @@ function addFormInputField(container) {
             <button type="button" class="btn btn-sm btn-primary mt-2 add-option">Add Option</button>
         </div>
 
-        <div class="mt-2">
-            <label for="field_required" class="form-check-label">Required:</label>
+        <div class="container mt-4 mb-4">
+            <label for="field_required" class="form-check-label">Required: </label>
             <input type="checkbox" class="form-check-input" name="field_required[]">
         </div>
 
         <div class="mt-2">
-            <button type="button" class="btn btn-danger remove-field">Remove Field</button>
+            <button type="button" class="btn btn-danger btn-md remove-field mt-3">Remove Field</button>
         </div>
     `;
 
