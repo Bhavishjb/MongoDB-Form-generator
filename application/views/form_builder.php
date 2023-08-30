@@ -17,12 +17,12 @@
                             <h2 style="text-align:center;">Create Your Form</h2>
                             <?php
                                 $user_id = $this->session->userdata('user_id');
-                                if ($user_id !== null) {
-                                    echo "User ID: " . $user_id;
-                                } else {
-                                    echo "User ID not set.";
-                                }
-                                ?>
+                            if ($user_id !== null) {
+                                echo "User ID: " . $user_id;
+                            } else {
+                                echo "User ID not set.";
+                            }
+                            ?>
                             <form action="index" method="post" id="form-generator-form">
                                 <div class="mb-4">
                                     <label for="form_title" class="form-label">Form Title:</label>

@@ -1,4 +1,5 @@
 <?php
+
 defined('BASEPATH') or exit('No direct script access allowed');
 
 
@@ -10,4 +11,4 @@ $route['login/logout'] = 'login/logout';
 
 $route['(:any)'] = 'pages/view/$1';
 $route['404_override'] = '';
-$route['translate_uri_dashes'] = FALSE;
+$route['translate_uri_dashes'] = false;

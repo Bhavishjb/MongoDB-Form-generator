@@ -36,7 +36,7 @@
  * @since	Version 3.0.0
  * @filesource
  */
-defined('BASEPATH') OR exit('No direct script access allowed');
+defined('BASEPATH') or exit('No direct script access allowed');
 
 /**
  * SessionUpdateTimestampHandlerInterface
@@ -49,8 +49,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
  * @author	Andrey Andreev
  * @link	https://codeigniter.com/userguide3/libraries/sessions.html
  */
-interface SessionUpdateTimestampHandlerInterface {
-
-	public function updateTimestamp($session_id, $data);
-	public function validateId($session_id);
+interface SessionUpdateTimestampHandlerInterface
+{
+    public function updateTimestamp($session_id, $data);
+    public function validateId($session_id);
 }
