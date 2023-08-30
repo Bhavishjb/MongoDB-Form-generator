@@ -4,8 +4,9 @@ defined('BASEPATH') or exit('No direct script access allowed');
 class Forms_model extends CI_Model {
 
     
+    public $collection = 'fields';
     public $database = 'College-DataBase';
-    public $collection = 'form';
+
     private $conn;
 
     public function __construct()
@@ -14,8 +15,27 @@ class Forms_model extends CI_Model {
         $this->load->library('mongodb');
         $this->conn = $this->mongodb->getConn();
     }
-    public function create_form($data) {
-        return $this->mongo_db->insert($this->collection, $data);
+    public function create_form($data)
+    {
+        try {
+            $collection = 'fields';
+            // Define the collection name for user registration
+            $this->load->model('User_model');
+            $this->User_model->createCollectionIfNotExists($collection);
+
+            $query = new MongoDB\Driver\BulkWrite();
+            $query->insert($data);
+
+            $result = $this->conn->executeBulkWrite($this->database . '.' . $collection, $query);
+
+            if ($result == 1) {
+                return TRUE;
+            }
+
+            return FALSE;
+        } catch (MongoDB\Driver\Exception\RuntimeException $ex) {
+            show_error('Error while saving users: ' . $ex->getMessage(), 500);
+        }
     }
 
     public function get_form($form_id) {
