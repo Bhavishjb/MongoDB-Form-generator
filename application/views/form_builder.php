@@ -4,6 +4,7 @@
 <head>
     <title>Form Generator</title>
     <link rel="stylesheet" href="https://bootswatch.com/5/flatly/bootstrap.min.css">
+   
 </head>
 
 <body>
@@ -14,8 +15,7 @@
                     <div class="card-body">
                         <div class="container">
                             <h2 style="text-align:center;">Create Your Form</h2>
-                            <form action="index" method="post">
-                            
+                            <form action="index" method="post" id="form-generator-form">
                                 <div class="mb-3">
                                     <label for="form_title" class="form-label">Form Title:</label>
                                     <input type="text" class="form-control" name="form_title" required>
@@ -27,68 +27,15 @@
                                 </div>
 
                                 <h3>Form Fields</h3>
-                                
-                                    <div class="form-group">
-                                        <div class=" mt-4 mb-4">
-                                            <label for="field_label" class="form-label">Field Label:</label>
-                                            <input type="text" class="form-control" name="field_label" required>
-                                        </div>
 
-                                        <div class="form-group mb-4">
-                                            <label>Input Type:</label>
-                                            <select id="input-type-select" class="form-control" name="field_type">
-                                                <option value="Textbox">Textbox</option>
-                                                <option value="Dropdown">Dropdown</option>
-                                                <option value="Date">Date</option>
-                                                <option value="Email">Email</option>
-                                                <option value="File">File</option>
-                                                <option value="Textarea">Textarea</option>
-                                                <option value="Radio">Radio-Buttons</option>
-                                                <option value="Checkbox">Checkbox</option>
-                                            </select>
-                                        </div>
+                                <div class="form-group" id="form-fields-container">
+                                    <!-- Fields will be added here -->
+                                </div>
 
-                                        <div class="form-group mb-4" id="dynamic-input-group" style="display: none;">
-                                            <label>Input:</label>
-                                            <div class="dynamic-input-container"></div>
-                                        </div>
-
-                                        <div class="form-group mb-4" id="size-length-group">
-                                            <label>Size/Length:</label>
-                                            <input type="text" class="form-control" name="size_length" placeholder="Enter Size/Length">
-                                        </div>
-
-                                        <div class="form-group mb-4" id="options-group">
-                                            <label>Options</label>
-                                            <div class="option-fields">
-                                                <div class="option-field">
-                                                    <div class="row">
-                                                        <div class="col-md-5">
-                                                            <input type="text" class="form-control" name="option_value[]" placeholder="Option Value">
-                                                        </div>
-                                                        <div class="col-md-2">
-                                                            <button type="button" class="btn btn-sm btn-danger remove-option">Remove</button>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="row mt-2">
-                                                <div class="col-md-12">
-                                                    <button type="button" class="btn btn-sm btn-secondary add-option">Add Option</button>
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                        <div class="mb-4">
-                                            <label for="field_required" class="form-check-label">Required:</label>
-                                            <input type="checkbox" class="form-check-input" name="field_required">
-                                        </div>
-                                    </div>
-                                    <br><br>
-                                    <button type="button" id="add_more_option" class="btn btn-primary mb-3">Add More Option</button><br>
+                                <button type="button" class="btn btn-primary mb-3" id="add-field-button">Add Field</button>
 
                                 <button type="submit" class="btn btn-success mb-3">Save Form</button>
-                            <?php echo form_close(); ?>
+                            </form>
                         </div>
                     </div>
                 </div>
@@ -96,119 +43,175 @@
         </div>
     </div>
 
-    <script>
-    document.addEventListener('DOMContentLoaded', function() {
-        const addButton = document.getElementById('add_more_option');
-        const inputTypeSelect = document.getElementById('input-type-select');
+<script>document.addEventListener('DOMContentLoaded', function () {
+    const addFieldButton = document.getElementById('add-field-button');
+    const formFieldsContainer = document.getElementById('form-fields-container');
 
-        addButton.addEventListener('click', addMoreOption);
-        inputTypeSelect.addEventListener('change', function() {
-            handleSizeVisibility();
-            handleOptionsVisibility();
-            handleDynamicInput();
-        });
-
-        function handleSizeVisibility() {
-            const sizeLengthGroup = document.getElementById('size-length-group');
-            sizeLengthGroup.style.display = inputTypeSelect.value === 'Textbox' ? 'block' : 'none';
-        }
-
-        function handleOptionsVisibility() {
-            const optionsGroup = document.getElementById('options-group');
-            const showOptions = ['Dropdown', 'Checkbox', 'Radio'].includes(inputTypeSelect.value);
-            optionsGroup.style.display = showOptions ? 'block' : 'none';
-        }
-
-        function handleDynamicInput() {
-            const dynamicInputGroup = document.getElementById('dynamic-input-group');
-            const dynamicInputContainer = document.querySelector('.dynamic-input-container');
-
-            while (dynamicInputContainer.firstChild) {
-                dynamicInputContainer.removeChild(dynamicInputContainer.firstChild);
-            }
-
-            let dynamicInputHTML = '';
-            if (inputTypeSelect.value === 'Date' || inputTypeSelect.value === 'Textbox' ||
-                inputTypeSelect.value === 'Email' || inputTypeSelect.value === 'File' ||
-                inputTypeSelect.value === 'Textarea' || inputTypeSelect.value === 'Radio') {
-                dynamicInputHTML = getInputHTMLByType(inputTypeSelect.value);
-                dynamicInputGroup.style.display = 'block';
-            } else {
-                dynamicInputGroup.style.display = 'none';
-            }
-
-            dynamicInputContainer.innerHTML = dynamicInputHTML;
-        }
-
-        function getInputHTMLByType(inputType) {
-            if (inputType === 'Date') {
-                return '<input type="date" class="form-control" name="dynamic_input">';
-            } else if (inputType === 'Textbox') {
-                return '<input type="text" class="form-control" name="dynamic_input">';
-            } else if (inputType === 'Email') {
-                return '<input type="email" class="form-control" name="dynamic_input">';
-            } else if (inputType === 'File') {
-                return '<input type="file" class="form-control" name="dynamic_input">';
-            } else if (inputType === 'Textarea') {
-                return '<textarea class="form-control" name="dynamic_input"></textarea>';
-            }
-        }
-
-        function addOptionField() {
-            const optionField = document.querySelector('.option-field').cloneNode(true);
-            const removeButton = optionField.querySelector('.remove-option');
-
-            removeButton.addEventListener('click', function() {
-                optionField.remove();
-            });
-
-            optionField.querySelector('input[name="option_value[]"]').value = '';
-
-            document.querySelector('.option-fields').appendChild(optionField);
-        }
-
-        function applyFormEventListeners(optionField) {
-            const removeOptionButton = optionField.querySelector('.remove-option');
-            removeOptionButton.addEventListener('click', function() {
-                this.closest('.option-field').remove();
-            });
-        }
-
-        function addMoreOption() {
-            const optionDiv = document.querySelector('.form-group').cloneNode(true);
-            optionDiv.style.display = 'block'; // Display the cloned form group
-
-            // Clear input values, selected options, dynamic input, and option fields
-            optionDiv.querySelectorAll('input').forEach(input => input.value = '');
-            optionDiv.querySelectorAll('select').forEach(select => select.selectedIndex = 0);
-            optionDiv.querySelector('.dynamic-input-container').innerHTML = '';
-            optionDiv.querySelectorAll('.option-field').forEach((optionField, index) => {
-                if (index !== 0) {
-                    optionField.remove();
-                }
-            });
-
-            optionDiv.querySelector('.remove-option').remove();
-
-            const addButton = document.getElementById('add_more_option');
-            const br1 = document.createElement('br');
-            const br2 = document.createElement('br');
-            addButton.parentNode.insertBefore(optionDiv, addButton);
-            addButton.parentNode.insertBefore(br1, addButton);
-            addButton.parentNode.insertBefore(br2, addButton);
-
-            optionDiv.scrollIntoView({ behavior: 'smooth' });
-
-            applyFormEventListeners(optionDiv); // Apply event listeners to the new option fields
-        }
-
-        // Initial setup
-        handleSizeVisibility();
-        handleOptionsVisibility();
-        applyFormEventListeners(document.querySelector('.form-group'));
+    addFieldButton.addEventListener('click', function () {
+        addFormInputField(formFieldsContainer);
     });
-</script>
 
+    // Initial field
+    addFormInputField(formFieldsContainer);
+});
+
+function addFormInputField(container) {
+    const fieldDiv = document.createElement('div');
+    fieldDiv.className = 'mb-4';
+
+    fieldDiv.innerHTML = `
+        <label for="field_label" class="form-label">Field Label:</label>
+        <input type="text" class="form-control" name="field_label[]" required>
+
+        <label for="field_type" class="form-label mt-2">Input Type:</label>
+        <select class="form-control" name="field_type[]">
+            <option value="Textbox">Textbox</option>
+            <option value="Dropdown">Dropdown</option>
+            <option value="Date">Date</option>
+            <option value="Email">Email</option>
+            <option value="File">File</option>
+            <option value="Textarea">Textarea</option>
+            <option value="Radio">Radio-Buttons</option>
+            <option value="Checkbox">Checkbox</option>
+        </select>
+
+        <div class="input-specific mt-2">
+            <!-- Input field will be added here based on selection -->
+        </div>
+
+        <div class="size-length mt-2">
+            <label class="form-label">Size/Length:</label>
+            <input type="text" class="form-control" name="size_length[]" placeholder="Enter Size/Length">
+        </div>
+
+        <div class="options mt-2">
+            <label class="form-label">Options:</label>
+            <div class="option-fields">
+                <div class="option-field">
+                    <div class="row">
+                        <div class="col-md-5">
+                            <input type="text" class="form-control" name="option_value[][0]" placeholder="Option Value">
+                        </div>
+                        <div class="col-md-2">
+                            <button type="button" class="btn btn-sm btn-danger remove-option">Remove</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <button type="button" class="btn btn-sm btn-primary mt-2 add-option">Add Option</button>
+        </div>
+
+        <div class="mt-2">
+            <label for="field_required" class="form-check-label">Required:</label>
+            <input type="checkbox" class="form-check-input" name="field_required[]">
+        </div>
+
+        <div class="mt-2">
+            <button type="button" class="btn btn-danger remove-field">Remove Field</button>
+        </div>
+    `;
+
+    container.appendChild(fieldDiv);
+
+    const fieldTypeSelect = fieldDiv.querySelector('select[name="field_type[]"]');
+    const inputSpecificDiv = fieldDiv.querySelector('.input-specific');
+    const sizeLengthDiv = fieldDiv.querySelector('.size-length');
+    const optionsDiv = fieldDiv.querySelector('.options');
+
+    fieldTypeSelect.addEventListener('change', function () {
+        toggleInputSpecific(inputSpecificDiv, this.value);
+        toggleSizeLength(sizeLengthDiv, this.value);
+        toggleOptions(optionsDiv, this.value);
+    });
+
+    fieldDiv.querySelector('.add-option').addEventListener('click', function () {
+        addOptionField(optionsDiv);
+    });
+
+    fieldDiv.querySelector('.remove-option').addEventListener('click', function () {
+        removeOptionField(this);
+    });
+
+    fieldDiv.querySelector('.remove-field').addEventListener('click', function () {
+        removeField(this);
+    });
+
+    toggleInputSpecific(inputSpecificDiv, fieldTypeSelect.value);
+    toggleSizeLength(sizeLengthDiv, fieldTypeSelect.value);
+    toggleOptions(optionsDiv, fieldTypeSelect.value);
+}
+
+function toggleInputSpecific(inputSpecificDiv, fieldType) {
+    inputSpecificDiv.innerHTML = ''; // Clear any existing input fields
+    
+    if (fieldType === 'Date') {
+        inputSpecificDiv.innerHTML = `
+            <label class="form-label">Input:</label>
+            <input type="date" class="form-control" name="input[]" placeholder="Enter Date">
+        `;
+    } else if (fieldType === 'Textarea') {
+        inputSpecificDiv.innerHTML = `
+            <label class="form-label">Input:</label>
+            <textarea class="form-control" name="input[]" placeholder="Enter Text"></textarea>
+        `;
+    } else if (fieldType === 'File') {
+        inputSpecificDiv.innerHTML = `
+            <label class="form-label">Input:</label>
+            <input type="file" class="form-control" name="input[]" placeholder="Choose File">
+        `;
+    }
+     else {
+        inputSpecificDiv.innerHTML = `
+            <label class="form-label">Input:</label>
+            <input type="text" class="form-control" name="input[]" placeholder="Enter Input">
+        `;
+    }
+}
+
+function toggleSizeLength(sizeLengthDiv, fieldType) {
+    if (fieldType === 'Textbox') {
+        sizeLengthDiv.style.display = 'block';
+    } else {
+        sizeLengthDiv.style.display = 'none';
+    }
+}
+
+function toggleOptions(optionsDiv, fieldType) {
+    if (['Dropdown', 'Checkbox', 'Radio'].includes(fieldType)) {
+        optionsDiv.style.display = 'block';
+    } else {
+        optionsDiv.style.display = 'none';
+    }
+}
+
+function addOptionField(optionsDiv) {
+    const optionField = document.createElement('div');
+    optionField.className = 'option-field';
+    optionField.innerHTML = `
+        <div class="row">
+            <div class="col-md-5">
+                <input type="text" class="form-control" name="option_value[][0]" placeholder="Option Value">
+            </div>
+            <div class="col-md-2">
+                <button type="button" class="btn btn-sm btn-danger remove-option">Remove</button>
+            </div>
+        </div>
+    `;
+
+    optionsDiv.querySelector('.option-fields').appendChild(optionField);
+
+    optionField.querySelector('.remove-option').addEventListener('click', function () {
+        removeOptionField(this);
+    });
+}
+
+function removeOptionField(button) {
+    button.closest('.option-field').remove();
+}
+
+function removeField(button) {
+    button.closest('.mb-4').remove();
+}</script>
 </body>
 
 </html>
