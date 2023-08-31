@@ -143,24 +143,25 @@ class FormController extends CI_Controller
         }
     }
     public function edit_form($form_id)
-    {
-        // Retrieve form details from MongoDB based on $form_id
-        $form_data = $this->Forms_model->get_form($form_id);
+{
+    // Retrieve form details from MongoDB based on $form_id
+    $form_data = $this->Forms_model->get_form($form_id);
 
-        if ($form_data) {
-            // Extract data for prepopulating the form fields
-            $data['form_id'] = $form_id;
-            $data['form_title'] = $form_data->form_title;
-            $data['form_description'] = $form_data->form_description;
-            $data['form_fields'] = $form_data->fields;
+    if ($form_data) {
+        // Extract data for prepopulating the form fields
+        $data['form_id'] = $form_id;
+        $data['form_title'] = $form_data->form_title;
+        $data['form_description'] = $form_data->form_description;
+        $data['form_fields'] = $form_data->fields;
 
-            // Load the edit_form_view.php view with prepopulated data
-            $this->load->view('edit_form_view', $data);
-        } else {
-            // Handle form not found error
-            show_error('Form not found', 404);
-        }
+        // Load the edit_form_view.php view with prepopulated data
+        $this->load->view('edit_form_view', $data);
+    } else {
+        // Handle form not found error
+        show_error('Form not found', 404);
     }
+}
+
     public function update_form($form_id)
 {
     // Retrieve form data from the submitted form
@@ -170,6 +171,7 @@ class FormController extends CI_Controller
     $field_types = $this->input->post('field_type');
     $required = $this->input->post('field_required');
     $size_length = $this->input->post('size_length');
+    
 
     // Construct the updated form data array
     $updated_form_data = array(
@@ -196,7 +198,8 @@ class FormController extends CI_Controller
 
     if ($update_result) {
         // Update successful, you can redirect to a success page or back to the form list
-        redirect('display_form/' . urlencode($form_id)); // Adjust the URL as needed
+        $clg_id = $this->session->userdata('user_id');
+        redirect('display_form/' . urlencode($clg_id)); // Adjust the URL as needed
     } else {
         // Handle update failure, maybe show an error message
         // You can also add error handling in your update_form method in Forms_model
