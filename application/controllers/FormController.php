@@ -100,7 +100,9 @@ class FormController extends CI_Controller
             $data['form_data'] = $form_data; // Pass the data to the view
 
             // Load the display_form view with form data
+            $this->load->view('templates/header');
             $this->load->view('display_form', $data);
+            $this->load->view('templates/footer');
         } else {
             // Handle form not found error
             show_error('Form not found', 404);
