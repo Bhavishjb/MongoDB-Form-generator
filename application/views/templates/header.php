@@ -30,14 +30,20 @@
         <span class="navbar-toggler-icon"></span>
       </button>
 
-
-      <div class="navbar-collapse collapse" id="navbarColor01">
-        <ul class="navbar-nav me-auto">
-          <li class="nav-item">
-            <a class="nav-link" href="<?php echo base_url('/FormController/index'); ?>">HOME
-              <span class="visually-hidden">(current)</span>
-            </a>
-          </li>
+            <div class="navbar-collapse collapse" id="navbarColor01">
+                <ul class="navbar-nav me-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="<?php echo base_url('/FormController/index'); ?>">HOME
+                            <span class="visually-hidden">(current)</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="<?php echo base_url(); ?>/FormController/display_form/<?php echo $this->session->userdata('user_id'); ?>">DETAIL</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="<?php echo base_url(); ?>about">ABOUT</a>
+                    </li>
+                </ul>
 
           <li class="nav-item">
             <a class="nav-link" href="<?php echo base_url('formcontroller/display_form/64ec305dec9b9ec359031908'); ?>">FORMS</a>

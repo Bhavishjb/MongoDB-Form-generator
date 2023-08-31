@@ -18,9 +18,9 @@
             <?php
             $user_id = $this->session->userdata('user_id');
             if ($user_id !== null) {
-              echo "User ID: " . $user_id;
+                echo "User ID: " . $user_id;
             } else {
-              echo "User ID not set.";
+                echo "User ID not set.";
             }
             ?>
             <form action="index" method="post" id="form-generator-form">
