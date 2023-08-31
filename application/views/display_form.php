@@ -27,8 +27,8 @@
                                 <tbody>
                                     <?php foreach ($form_fields as $field) : ?>
                                         <tr>
-                                            <td><?php echo $field['field_label']; ?></td>
-                                            <td><?php echo $field['field_type']; ?></td>
+                                            <td><?php echo $field->field_label; ?></td>
+                                            <td><?php echo $field->field_type; ?></td>
                                             <!-- Add other table columns as needed -->
                                         </tr>
                                     <?php endforeach; ?>
