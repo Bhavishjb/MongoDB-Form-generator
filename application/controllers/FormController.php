@@ -4,218 +4,238 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
 class FormController extends CI_Controller
 {
-	public function __construct()
-	{
-		parent::__construct();
-		$this->load->model('Forms_model');
-		$this->load->model('Fields_model');
-		$this->load->library('form_validation');
-	}
+    public function __construct()
+    {
+        parent::__construct();
+        $this->load->model('Forms_model');
+        $this->load->model('Fields_model');
+        $this->load->library('form_validation');
+    }
 
-	public function index()
-	{
-		// Load the Forms_model
-		$this->load->model('Forms_model');
+    public function index()
+    {
+        // Load the Forms_model
+        $this->load->model('Forms_model');
 
-		// Handle form submission
-		if ($this->input->post()) {
-			// Collect form data
-			$clg_id = $this->session->userdata('user_id');
-			$form_title = $this->input->post('form_title');
-			$form_description = $this->input->post('form_description');
-			$field_labels = $this->input->post('field_label');
-			$field_types = $this->input->post('field_type');
-			$option_values = $this->input->post('option_value');
-			$required = $this->input->post('field_required');
-			$size_length = $this->input->post('size_length');
-
-
-			// Create an array to hold the form data
-			$form_data = array(
-				'clg_id' => $clg_id,
-				'form_title' => $form_title,
-				'form_description' => $form_description,
-				'fields' => array(),
-			);
+        // Handle form submission
+        if ($this->input->post()) {
+            // Collect form data
+            $clg_id = $this->session->userdata('user_id');
+            $form_title = $this->input->post('form_title');
+            $form_description = $this->input->post('form_description');
+            $field_labels = $this->input->post('field_label');
+            $field_types = $this->input->post('field_type');
+            $option_values = $this->input->post('option_value');
+            $required = $this->input->post('field_required');
+            $size_length = $this->input->post('size_length');
 
 
-			for ($i = 0; $i < count($field_labels); $i++) {
-				if (!($size_length[$i])) {
-					$size_length[$i] = 255;
-				}
-			}
-			for ($i = 0; $i < count($field_labels); $i++) {
-
-				$field = array(
-					'field_label' => $field_labels[$i],
-					'field_type' => $field_types[$i],
-					'field_required' =>  $required[$i],
-					'size_length' => $size_length[$i],
-				);
-
-				if (in_array($field_types[$i], array('Dropdown', 'Checkbox', 'Radio'))) {
-					$field_options = array();
-					for ($j = 0; $j < count($option_values[$i]); $j++) {
-						$field_options[] = $option_values[$i][$j];
-					}
-					$field['options'] = $field_options;
-				}
-				$form_data['fields'][] = $field;
-			}
-
-			$insert_result = $this->Forms_model->create_form($form_data);
-
-			if ($insert_result) {
-				//var_dump($option_values);
-				$clg_id = $this->session->userdata('user_id');
-				redirect('display_form/' . urlencode($clg_id));
-			} else {
-				//var_dump($option_values);
-				redirect('home');
-			}
-		}
-
-		// Load the view
-		$this->load->view('templates/header');
-		$this->load->view('form_builder');
-		$this->load->view('templates/footer');
-	}
+            // Create an array to hold the form data
+            $form_data = array(
+                'clg_id' => $clg_id,
+                'form_title' => $form_title,
+                'form_description' => $form_description,
+                'fields' => array(),
+            );
 
 
+            for ($i = 0; $i < count($field_labels); $i++) {
+                if (!($size_length[$i])) {
+                    $size_length[$i] = 255;
+                }
+            }
+            for ($i = 0; $i < count($field_labels); $i++) {
 
-	public function view_forms()
-	{
-		$data['forms'] = $this->Forms_model->get_all_forms();
+                $field = array(
+                    'field_label' => $field_labels[$i],
+                    'field_type' => $field_types[$i],
+                    'field_required' =>  $required[$i],
+                    'size_length' => $size_length[$i],
+                );
 
-		$this->load->view('templates/header');
-		$this->load->view('forms_view', $data); // Create this view file
-		$this->load->view('templates/footer');
-	}
-	public function display_form($clg_id)
-	{
-		// Retrieve form details from MongoDB based on $form_id
-		$form_data = $this->Forms_model->get_forms_by_clg_id($clg_id);
+                if (in_array($field_types[$i], array('Dropdown', 'Checkbox', 'Radio'))) {
+                    $field_options = array();
+                    for ($j = 0; $j < count($option_values[$i]); $j++) {
+                        $field_options[] = $option_values[$i][$j];
+                    }
+                    $field['options'] = $field_options;
+                }
+                $form_data['fields'][] = $field;
+            }
 
-		if ($form_data) {
-			$data['form_data'] = $form_data; // Pass the data to the view
+            $insert_result = $this->Forms_model->create_form($form_data);
 
-			// Load the display_form view with form data
-			$this->load->view('templates/header');
-			$this->load->view('display_form', $data);
-			$this->load->view('templates/footer');
-		} else {
-			// Handle form not found error
-			show_error('Form not found', 404);
-		}
-	}
+            if ($insert_result) {
+                //var_dump($option_values);
+                $clg_id = $this->session->userdata('user_id');
+                redirect('display_form/' . urlencode($clg_id));
+            } else {
+                //var_dump($option_values);
+                redirect('home');
+            }
+        }
+
+        // Load the view
+        $this->load->view('templates/header');
+        $this->load->view('form_builder');
+        $this->load->view('templates/footer');
+    }
 
 
-	// public function edit_form($form_id)
-	// {
-	//     // Retrieve form details from MongoDB based on $form_id
-	//     $form_data = $this->Forms_model->get_form($form_id);
 
-	//     if ($form_data) {
-	//         // Load the form_builder view with form data for editing
-	//         $data['form_id[]'] = $form_id;
-	//         $data['form_title'] = $form_data->form_title;
-	//         $data['form_description'] = $form_data->form_description;
-	//         $data['form_fields'] = $form_data->fields;
+    public function view_forms()
+    {
+        $data['forms'] = $this->Forms_model->get_all_forms();
 
-	//         $this->load->view('form_builder', $data);
-	//     } else {
-	//         // Handle form not found error
-	//         show_error('Form not found', 404);
-	//     }
-	// }
-	public function remove_form($form_id)
-	{
-		// Show a confirmation message to the user if needed, but we already did this in JavaScript.
+        $this->load->view('templates/header');
+        $this->load->view('forms_view', $data); // Create this view file
+        $this->load->view('templates/footer');
+    }
+    public function display_form($clg_id)
+    {
+        // Retrieve form details from MongoDB based on $form_id
+        $form_data = $this->Forms_model->get_forms_by_clg_id($clg_id);
 
-		// Call the model's method to delete the form by ID
-		$deleted = $this->Forms_model->delete_form($form_id);
+        if ($form_data) {
+            $data['form_data'] = $form_data; // Pass the data to the view
 
-		if ($deleted) {
-			// Form was successfully deleted, you can redirect to a success page or another action
-			redirect('display_form/' . urlencode($this->session->userdata('user_id')));
-		} else {
-			// Handle deletion error
-			show_error('Error while deleting the form', 500);
-		}
-	}
-	public function edit_form($form_id)
-	{
-		// Retrieve form details from MongoDB based on $form_id
-		$form_data = $this->Forms_model->get_form($form_id);
+            // Load the display_form view with form data
+            $this->load->view('templates/header');
+            $this->load->view('display_form', $data);
+            $this->load->view('templates/footer');
+        } else {
+            // Handle form not found error
+            show_error('Form not found', 404);
+        }
+    }
 
-		if ($form_data) {
-			// Extract data for prepopulating the form fields
-			$data['form_id'] = $form_id;
-			$data['form_title'] = $form_data->form_title;
-			$data['form_description'] = $form_data->form_description;
-			$data['form_fields'] = $form_data->fields;
 
-			// Load the edit_form_view.php view with prepopulated data
-			$this->load->view('edit_form_view', $data);
-		} else {
-			// Handle form not found error
-			show_error('Form not found', 404);
-		}
-	}
-	public function update_form($form_id)
-	{
-		// Retrieve form data from the submitted form
-		$form_title = $this->input->post('form_title');
-		$form_description = $this->input->post('form_description');
-		$field_labels = $this->input->post('field_label');
-		$field_types = $this->input->post('field_type');
-		$required = $this->input->post('field_required');
-		$size_length = $this->input->post('size_length');
-		// Construct the updated form data array
-		$updated_form_data = array(
-			'form_title' => $form_title,
-			'form_description' => $form_description,
-			'fields' => array(),
-		);
-		for ($i = 0; $i < count($field_labels); $i++) {
-			$field = array(
-				'field_label' => $field_labels[$i],
-				'field_type' => $field_types[$i],
-				'field_required' =>  $required[$i],
-				'size_length' => $size_length[$i],
-			);
-			// Add more logic here for handling field options if needed
+    // public function edit_form($form_id)
+    // {
+    //     // Retrieve form details from MongoDB based on $form_id
+    //     $form_data = $this->Forms_model->get_form($form_id);
 
-			$updated_form_data['fields'][] = $field;
-		}
+    //     if ($form_data) {
+    //         // Load the form_builder view with form data for editing
+    //         $data['form_id[]'] = $form_id;
+    //         $data['form_title'] = $form_data->form_title;
+    //         $data['form_description'] = $form_data->form_description;
+    //         $data['form_fields'] = $form_data->fields;
 
-		// Now, update the form in the database using the Forms_model
-		$update_result = $this->Forms_model->update_form($form_id, $updated_form_data);
+    //         $this->load->view('form_builder', $data);
+    //     } else {
+    //         // Handle form not found error
+    //         show_error('Form not found', 404);
+    //     }
+    // }
+    public function remove_form($form_id)
+    {
+        // Show a confirmation message to the user if needed, but we already did this in JavaScript.
 
-		if ($update_result) {
-			// Update successful, you can redirect to a success page or back to the form list
-			redirect('display_form/' . urlencode($form_id)); // Adjust the URL as needed
-		} else {
-			// Handle update failure, maybe show an error message
-			// You can also add error handling in your update_form method in Forms_model
-			show_error('Form update failed', 500);
-		}
-	}
-	public function generate_form($form_id)
-	{
-		// Retrieve form details from MongoDB based on $form_id
-		$form_data = $this->Forms_model->get_form($form_id);
+        // Call the model's method to delete the form by ID
+        $deleted = $this->Forms_model->delete_form($form_id);
 
-		if ($form_data) {
-			$data['form_data'] = $form_data; // Pass the form data to the view
+        if ($deleted) {
+            // Form was successfully deleted, you can redirect to a success page or another action
+            redirect('display_form/' . urlencode($this->session->userdata('user_id')));
+        } else {
+            // Handle deletion error
+            show_error('Error while deleting the form', 500);
+        }
+    }
+    public function edit_form($form_id)
+    {
+        // Retrieve form details from MongoDB based on $form_id
+        $form_data = $this->Forms_model->get_form($form_id);
 
-			// Load the generate_form view with form data
-			$this->load->view('templates/header');
-			$this->load->view('generate_form', $data);
-			$this->load->view('templates/footer');
-		} else {
-			// Handle form not found error
-			show_error('Form not found', 404);
-		}
-	}
+        if ($form_data) {
+            // 	// Extract data for prepopulating the form fields
+            // 	$data['form_id'] = $form_id;
+            // 	$data['form_title'] = $form_data->form_title;
+            // 	$data['form_description'] = $form_data->form_description;
+            // 	$data['form_fields'] = $form_data->fields;
+
+            // Load the edit_form view and pass form_data
+            $data['form_data'] = $form_data;
+            // Load the edit_form_view.php view with prepopulated data
+            $this->load->view('templates/header');
+            $this->load->view('edit_form_view', $data);
+
+        } else {
+            // Handle form not found error
+            show_error('Form not found', 404);
+        }
+    }
+    public function update_form($form_id)
+    {
+        // Retrieve form data from the submitted form
+        $form_title = $this->input->post('form_title');
+        $form_description = $this->input->post('form_description');
+        $field_labels = $this->input->post('field_label');
+        $field_types = $this->input->post('field_type');
+        $required = $this->input->post('field_required');
+        $size_length = $this->input->post('size_length');
+        $option_values = $this->input->post('option_value'); // Added this line for options
+
+        // Construct the updated form data array
+        $updated_form_data = array(
+            'form_title' => $form_title,
+            'form_description' => $form_description,
+            'fields' => array(),
+        );
+
+        for ($i = 0; $i < count($field_labels); $i++) {
+            $field = array(
+                'field_label' => $field_labels[$i],
+                'field_type' => $field_types[$i],
+                'field_required' => $required[$i],
+                'size_length' => $size_length[$i],
+            );
+
+            // Handling options for specific field types
+            if (in_array($field_types[$i], array('Dropdown', 'Checkbox', 'Radio'))) {
+                $field_options = array();
+                if (isset($option_values[$i])) {
+                    foreach ($option_values[$i] as $option_value) {
+                        if (!empty($option_value)) {
+                            $field_options[] = $option_value;
+                        }
+                    }
+                }
+                $field['options'] = $field_options;
+            }
+
+            $updated_form_data['fields'][] = $field;
+        }
+
+        // Now, update the form in the database using the Forms_model
+        $update_result = $this->Forms_model->update_form($form_id, $updated_form_data);
+
+        if ($update_result) {
+            // Update successful, you can redirect to a success page or back to the form list
+            $clg_id = $this->session->userdata('user_id');
+            redirect('FormController/display_form/' . urlencode($clg_id)); // Adjust the URL as needed
+        } else {
+            // Handle update failure, maybe show an error message
+            // You can also add error handling in your update_form method in Forms_model
+            show_error('Form update failed', 500);
+        }
+    }
+    public function generate_form($form_id)
+    {
+        // Retrieve form details from MongoDB based on $form_id
+        $form_data = $this->Forms_model->get_form($form_id);
+
+        if ($form_data) {
+            $data['form_data'] = $form_data; // Pass the form data to the view
+
+            // Load the generate_form view with form data
+            $this->load->view('templates/header');
+            $this->load->view('generate_form', $data);
+            $this->load->view('templates/footer');
+        } else {
+            // Handle form not found error
+            show_error('Form not found', 404);
+        }
+    }
 }

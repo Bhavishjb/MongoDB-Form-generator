@@ -10,7 +10,7 @@ class Login extends CI_Controller
         $this->load->model('User_model');
         $this->load->library('form_validation');
     }
-    
+
     public function index()
     {
         // Load your login form view here
@@ -22,7 +22,7 @@ class Login extends CI_Controller
     }
 
     public function login_user()
-    {       
+    {
 
         // Form validation rules
         $this->form_validation->set_rules('email', 'Email', 'trim|required');
