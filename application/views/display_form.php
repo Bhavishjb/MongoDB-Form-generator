@@ -43,18 +43,15 @@
 
                                 <!-- Move buttons outside the table -->
                                 <!-- ... (previous code) -->
-                                <div class="container">
+                                <div class="container mb-4">
                                     <a href="<?php echo base_url('FormController/edit_form/' . $form->_id); ?>" class="btn btn-info btn-lg ">Edit</a>
                                     <a href="#" class="btn btn-danger btn-lg " onclick="confirmDelete('<?php echo $form->_id; ?>')">Remove</a>
                                     <a href="<?php echo base_url('FormController/generate_form/' . $form->_id); ?>" class="btn btn-success btn-lg float-end">Generate Form</a>
                                 </div>
-
+                                <hr>
+                                
+                            <?php endforeach; ?>
                         </div>
-
-
-
-
-                    <?php endforeach; ?>
                     </div>
                 </div>
             </div>
