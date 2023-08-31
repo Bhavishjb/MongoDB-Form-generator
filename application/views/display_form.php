@@ -1,4 +1,3 @@
-<!-- display_form.php -->
 <!DOCTYPE html>
 <html>
 <head>
@@ -12,29 +11,36 @@
                 <div class="card">
                     <div class="card-body">
                         <div class="container">
-                            <h2 style="text-align:center;">Form Details</h2>
-                            <h3>Form Title: <?php echo $form_title; ?></h3>
-                            <p>Form Description: <?php echo $form_description; ?></p>
-                            <h3>Form Fields</h3>
-                            <table class="table">
-                                <thead>
-                                    <tr>
-                                        <th>Field Label</th>
-                                        <th>Field Type</th>
-                                        <!-- Add other table headers as needed -->
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <?php foreach ($form_fields as $field) : ?>
+                        <h2 style="text-align:center;">Form Details</h2>
+                            <?php foreach ($form_data as $form) : ?>
+                                <br/><br/><br/>
+                                <h3>Form Title: <?php echo $form->form_title; ?></h3>
+                                <p>Form Description: <?php echo $form->form_description; ?></p>
+                                <h3>Form Fields</h3>
+                                <table class="table">
+                                    <thead>
                                         <tr>
-                                            <td><?php echo $field->field_label; ?></td>
-                                            <td><?php echo $field->field_type; ?></td>
-                                            <!-- Add other table columns as needed -->
+                                            <th>Field Label</th>
+                                            <th>Field Type</th>
+                                            <th>Required</th>
+                                            <th>Size/Length</th>
+                                            <!-- Add other table headers as needed -->
                                         </tr>
-                                    <?php endforeach; ?>
-                                </tbody>
-                            </table>
-                            <a href="<?php echo base_url('formcontroller/edit_form/' . $form_id); ?>" class="btn btn-primary">Edit</a>
+                                    </thead>
+                                    <tbody>
+                                        <?php foreach ($form->fields as $field) : ?>
+                                            <tr>
+                                                <td><?php echo $field->field_label; ?></td>
+                                                <td><?php echo $field->field_type; ?></td>
+                                                <td><?php echo $field->field_required == 'on' ? 'Yes' : 'No'; ?></td>
+                                                <td><?php echo $field->size_length; ?></td>
+                                                <!-- Add other table columns as needed -->
+                                            </tr>
+                                        <?php endforeach; ?>
+                                    </tbody>
+                                </table>
+                                <a href="<?php echo base_url('FormController/edit_form/' . $form->_id); ?>" class="btn btn-primary">Edit</a>
+                            <?php endforeach; ?>
                         </div>
                     </div>
                 </div>
