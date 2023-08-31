@@ -12,3 +12,5 @@ $route['login/logout'] = 'login/logout';
 $route['(:any)'] = 'pages/view/$1';
 $route['404_override'] = '';
 $route['translate_uri_dashes'] = false;
+
+$route['display_form/(:any)'] = 'FormController/display_form/$1';
