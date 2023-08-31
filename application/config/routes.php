@@ -8,6 +8,8 @@ $route['users/login_form'] = 'users/login_form';
 $route['login'] = 'Login';
 $route['register'] = 'register';
 $route['login/logout'] = 'login/logout';
+$route['FormController/update_form/(:any)'] = 'FormController/update_form/$1';
+
 
 $route['(:any)'] = 'pages/view/$1';
 $route['404_override'] = '';
