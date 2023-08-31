@@ -68,7 +68,6 @@ class FormController extends CI_Controller
                 //var_dump($option_values);
                 $clg_id = $this->session->userdata('user_id');
                 redirect('display_form/' . urlencode($clg_id));
-
             } else {
                 //var_dump($option_values);
                 redirect('home');
@@ -110,24 +109,99 @@ class FormController extends CI_Controller
     }
 
 
+    // public function edit_form($form_id)
+    // {
+    //     // Retrieve form details from MongoDB based on $form_id
+    //     $form_data = $this->Forms_model->get_form($form_id);
+
+    //     if ($form_data) {
+    //         // Load the form_builder view with form data for editing
+    //         $data['form_id[]'] = $form_id;
+    //         $data['form_title'] = $form_data->form_title;
+    //         $data['form_description'] = $form_data->form_description;
+    //         $data['form_fields'] = $form_data->fields;
+
+    //         $this->load->view('form_builder', $data);
+    //     } else {
+    //         // Handle form not found error
+    //         show_error('Form not found', 404);
+    //     }
+    // }
+    public function remove_form($form_id)
+    {
+        // Show a confirmation message to the user if needed, but we already did this in JavaScript.
+
+        // Call the model's method to delete the form by ID
+        $deleted = $this->Forms_model->delete_form($form_id);
+
+        if ($deleted) {
+            // Form was successfully deleted, you can redirect to a success page or another action
+            redirect('display_form/' . urlencode($this->session->userdata('user_id')));
+        } else {
+            // Handle deletion error
+            show_error('Error while deleting the form', 500);
+        }
+    }
     public function edit_form($form_id)
     {
         // Retrieve form details from MongoDB based on $form_id
         $form_data = $this->Forms_model->get_form($form_id);
 
         if ($form_data) {
-            // Load the form_builder view with form data for editing
-            $data['form_id[]'] = $form_id;
+            // Extract data for prepopulating the form fields
+            $data['form_id'] = $form_id;
             $data['form_title'] = $form_data->form_title;
             $data['form_description'] = $form_data->form_description;
             $data['form_fields'] = $form_data->fields;
 
-            $this->load->view('form_builder', $data);
+            // Load the edit_form_view.php view with prepopulated data
+            $this->load->view('edit_form_view', $data);
         } else {
             // Handle form not found error
             show_error('Form not found', 404);
         }
     }
+    public function update_form($form_id)
+{
+    // Retrieve form data from the submitted form
+    $form_title = $this->input->post('form_title');
+    $form_description = $this->input->post('form_description');
+    $field_labels = $this->input->post('field_label');
+    $field_types = $this->input->post('field_type');
+    $required = $this->input->post('field_required');
+    $size_length = $this->input->post('size_length');
 
+    // Construct the updated form data array
+    $updated_form_data = array(
+        'form_title' => $form_title,
+        'form_description' => $form_description,
+        'fields' => array(),
+    );
+
+    for ($i = 0; $i < count($field_labels); $i++) {
+        $field = array(
+            'field_label' => $field_labels[$i],
+            'field_type' => $field_types[$i],
+            'field_required' =>  $required[$i],
+            'size_length' => $size_length[$i],
+        );
+
+        // Add more logic here for handling field options if needed
+
+        $updated_form_data['fields'][] = $field;
+    }
+
+    // Now, update the form in the database using the Forms_model
+    $update_result = $this->Forms_model->update_form($form_id, $updated_form_data);
+
+    if ($update_result) {
+        // Update successful, you can redirect to a success page or back to the form list
+        redirect('display_form/' . urlencode($form_id)); // Adjust the URL as needed
+    } else {
+        // Handle update failure, maybe show an error message
+        // You can also add error handling in your update_form method in Forms_model
+        show_error('Form update failed', 500);
+    }
+}
 
 }
