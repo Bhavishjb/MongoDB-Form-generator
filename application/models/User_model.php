@@ -1,15 +1,15 @@
 <?php
+
 defined('BASEPATH') or exit('No direct script access allowed');
 
 
 class User_model extends CI_model
 {
-
     public $database = 'College-DataBase';
     public $collection = 'College_register';
     private $conn;
 
-     public function __construct()
+    public function __construct()
     {
         parent::__construct();
         $this->load->library('mongodb');
@@ -36,7 +36,7 @@ class User_model extends CI_model
         }
     }
 
-     public function register_user($name, $email, $password)
+    public function register_user($name, $email, $password)
     {
         try {
             $user = array(
@@ -58,10 +58,10 @@ class User_model extends CI_model
             $result = $this->conn->executeBulkWrite($this->database . '.' . $collectionName, $query);
 
             if ($result == 1) {
-                return TRUE;
+                return true;
             }
 
-            return FALSE;
+            return false;
         } catch (MongoDB\Driver\Exception\RuntimeException $ex) {
             show_error('Error while saving users: ' . $ex->getMessage(), 500);
         }

@@ -1,9 +1,9 @@
 <?php
+
 defined('BASEPATH') or exit('No direct script access allowed');
 
 class Register extends CI_Controller
 {
-
     public function __construct()
     {
         parent::__construct();
@@ -30,7 +30,7 @@ class Register extends CI_Controller
         $this->form_validation->set_rules('password', 'Password', 'trim|required|min_length[8]');
         $this->form_validation->set_rules('confirm_password', 'Confirm Password', 'trim|required|matches[password]');
 
-        if ($this->form_validation->run() === FALSE) {
+        if ($this->form_validation->run() === false) {
             // Validation failed, reload the registration form with errors
             $this->load->view('templates/header');
             $this->load->view('register_form');

@@ -1,5 +1,6 @@
 <?php
-defined('BASEPATH') OR exit('No direct script access allowed');
+
+defined('BASEPATH') or exit('No direct script access allowed');
 
 /*
 | -------------------------------------------------------------------
@@ -71,30 +72,30 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 | the query builder class.
 */
 $active_group = 'default';
-$query_builder = TRUE;
+$query_builder = true;
 $db['default'] = $db['mongodb'];
 
 
 $db['default'] = array(
-	'dsn'	=> '',
-	'hostname' => 'localhost',
-	'username' => '',
-	'password' => '',
-	'database' => '',
-	'dbdriver' => 'mysqli',
-	'dbprefix' => '',
-	'pconnect' => FALSE,
-	'db_debug' => (ENVIRONMENT !== 'production'),
-	'cache_on' => FALSE,
-	'cachedir' => '',
-	'char_set' => 'utf8',
-	'dbcollat' => 'utf8_general_ci',
-	'swap_pre' => '',
-	'encrypt' => FALSE,
-	'compress' => FALSE,
-	'stricton' => FALSE,
-	'failover' => array(),
-	'save_queries' => TRUE
+    'dsn'	=> '',
+    'hostname' => 'localhost',
+    'username' => '',
+    'password' => '',
+    'database' => '',
+    'dbdriver' => 'mysqli',
+    'dbprefix' => '',
+    'pconnect' => false,
+    'db_debug' => (ENVIRONMENT !== 'production'),
+    'cache_on' => false,
+    'cachedir' => '',
+    'char_set' => 'utf8',
+    'dbcollat' => 'utf8_general_ci',
+    'swap_pre' => '',
+    'encrypt' => false,
+    'compress' => false,
+    'stricton' => false,
+    'failover' => array(),
+    'save_queries' => true
 );
 $db['mongodb'] = array(
     'hostname' => 'localhost', // MongoDB server hostname or IP address
@@ -102,7 +103,7 @@ $db['mongodb'] = array(
     'username' => '',          // MongoDB username (if required)
     'password' => '',          // MongoDB password (if required)
     'database' => 'user_db',   // MongoDB database name
-    'db_debug' => FALSE,       // Enable database debugging
+    'db_debug' => false,       // Enable database debugging
     'return_as' => 'array',    // Return results as an array
-    'active' => TRUE,          // Set this to TRUE to enable the database
+    'active' => true,          // Set this to TRUE to enable the database
 );

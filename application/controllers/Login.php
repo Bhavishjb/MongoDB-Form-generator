@@ -1,9 +1,9 @@
 <?php
+
 defined('BASEPATH') or exit('No direct script access allowed');
 
 class Login extends CI_Controller
 {
-
     public function __construct()
     {
         parent::__construct();
@@ -23,13 +23,13 @@ class Login extends CI_Controller
 
     public function login_user()
     {
-        
+
         // Form validation rules
         $this->form_validation->set_rules('email', 'Email', 'trim|required');
         $this->form_validation->set_rules('password', 'Password', 'trim|required');
-        
 
-        if ($this->form_validation->run() === FALSE) {
+
+        if ($this->form_validation->run() === false) {
             // Validation failed, reload the login form with errors
             $this->load->view('templates/header');
             $this->load->view('login_form');
@@ -47,7 +47,7 @@ class Login extends CI_Controller
                 // Set user session and redirect to user controller
                 $this->session->set_userdata('user_id', $user->_id);
                 $this->session->set_userdata('name', $user->name);
-           
+
 
 
 
