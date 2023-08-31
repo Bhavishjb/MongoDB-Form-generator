@@ -34,7 +34,7 @@
                                     <?php endforeach; ?>
                                 </tbody>
                             </table>
-                            <a href="<?php echo base_url('form/edit_form/' . $form_id); ?>" class="btn btn-primary">Edit</a>
+                            <a href="<?php echo base_url('formcontroller/edit_form/' . $form_id); ?>" class="btn btn-primary">Edit</a>
                         </div>
                     </div>
                 </div>
