@@ -171,14 +171,12 @@ class FormController extends CI_Controller
 		$field_types = $this->input->post('field_type');
 		$required = $this->input->post('field_required');
 		$size_length = $this->input->post('size_length');
-
 		// Construct the updated form data array
 		$updated_form_data = array(
 			'form_title' => $form_title,
 			'form_description' => $form_description,
 			'fields' => array(),
 		);
-
 		for ($i = 0; $i < count($field_labels); $i++) {
 			$field = array(
 				'field_label' => $field_labels[$i],
@@ -186,7 +184,6 @@ class FormController extends CI_Controller
 				'field_required' =>  $required[$i],
 				'size_length' => $size_length[$i],
 			);
-
 			// Add more logic here for handling field options if needed
 
 			$updated_form_data['fields'][] = $field;
