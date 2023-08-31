@@ -47,6 +47,20 @@ class Forms_model extends CI_Model
             show_error('Error while fetching form: ' . $ex->getMessage(), 500);
         }
     }
+    public function get_form_by_title($form_title)
+    {
+        try {
+            $query = new MongoDB\Driver\Query(['form_title' => $form_title]); // Corrected syntax here
+            $result = $this->conn->executeQuery($this->database . '.' . $this->collection, $query);
+
+            foreach ($result as $document) {
+                return $document;
+            }
+            return null;
+        } catch (MongoDB\Driver\Exception\RuntimeException $ex) {
+            show_error('Error while fetching form: ' . $ex->getMessage(), 500);
+        }
+    }
 
     public function update_form($form_id, $data)
     {

@@ -66,7 +66,8 @@ class FormController extends CI_Controller
 
             if ($insert_result) {
                 //var_dump($option_values);
-                redirect('home');
+                redirect('display_form/' . urlencode($form_title));
+
             } else {
                 //var_dump($option_values);
                 redirect('home');
@@ -89,42 +90,43 @@ class FormController extends CI_Controller
         $this->load->view('forms_view', $data); // Create this view file
         $this->load->view('templates/footer');
     }
-    public function display_form($form_id)
-{
-    // Retrieve form details from MongoDB based on $form_id
-    $form_data = $this->Forms_model->get_form($form_id);
+    public function display_form($form_title)
+    {
+        // Retrieve form details from MongoDB based on $form_id
+        $form_data = $this->Forms_model->get_form_by_title($form_title);
+        //var_dump($form_data);
+        if ($form_data) {
+            // Load the display_form view with form data
+            $data['form_id'] = $form_data->_id;
+            $data['form_title'] = $form_data->form_title;
+            $data['form_description'] = $form_data->form_description;
+            $data['form_fields'] = $form_data->fields;
 
-    if ($form_data) {
-        // Load the display_form view with form data
-        $data['form_id'] = $form_id;
-        $data['form_title'] = $form_data->form_title;
-        $data['form_description'] = $form_data->form_description;
-        $data['form_fields'] = $form_data->fields;
-
-        $this->load->view('display_form', $data);
-    } else {
-        // Handle form not found error
-        show_error('Form not found', 404);
+            $this->load->view('display_form', $data);
+        } else {
+            // Handle form not found error
+            show_error('Form not found', 404);
+        }
     }
-}
-public function edit_form($form_id)
-{
-    // Retrieve form details from MongoDB based on $form_id
-    $form_data = $this->Forms_model->get_form($form_id);
 
-    if ($form_data) {
-        // Load the form_builder view with form data for editing
-        $data['form_id'] = $form_id;
-        $data['form_title'] = $form_data->form_title;
-        $data['form_description'] = $form_data->form_description;
-        $data['form_fields'] = $form_data->fields;
+    public function edit_form($form_id)
+    {
+        // Retrieve form details from MongoDB based on $form_id
+        $form_data = $this->Forms_model->get_form($form_id);
 
-        $this->load->view('form_builder', $data);
-    } else {
-        // Handle form not found error
-        show_error('Form not found', 404);
+        if ($form_data) {
+            // Load the form_builder view with form data for editing
+            $data['form_id'] = $form_id;
+            $data['form_title'] = $form_data->form_title;
+            $data['form_description'] = $form_data->form_description;
+            $data['form_fields'] = $form_data->fields;
+
+            $this->load->view('form_builder', $data);
+        } else {
+            // Handle form not found error
+            show_error('Form not found', 404);
+        }
     }
-}
 
 
 }
