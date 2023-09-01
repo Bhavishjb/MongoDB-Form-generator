@@ -32,7 +32,7 @@
 
                   <label for="field_type_<?php echo $index; ?>" class="form-label">Field Type:</label>
                   <select class="form-select" name="field_type[]">
-                    <option value="Text" <?php echo ($field->field_type === 'Text') ? 'selected' : ''; ?>>Textbox</option>
+                    <option value="Textbox" <?php echo ($field->field_type === 'Textbox') ? 'selected' : ''; ?>>Textbox</option>
                     <option value="Dropdown" <?php echo ($field->field_type === 'Dropdown') ? 'selected' : ''; ?>>Dropdown</option>
                     <option value="Date" <?php echo ($field->field_type === 'Date') ? 'selected' : ''; ?>>Date</option>
                     <option value="Email" <?php echo ($field->field_type === 'Email') ? 'selected' : ''; ?>>Email</option>
@@ -61,12 +61,16 @@
                       <?php endforeach; ?>
                     </div>
                     <button type="button" class="btn btn-sm btn-primary mt-2 add-option">Add Option</button>
-                    <div class=" mt-4 mb-5">
+                  <?php endif; ?>
+                </div>
+                <div class="size-length mt-2">
+                    <label class="form-label mt-4">Size/Length:</label>
+                    <input type="text" class="form-control" name="size_length[]" placeholder="Enter Size/Length" value="<?php echo($field->size_length); ?>">
+                </div>
+                <div class=" mt-4 mb-5">
                       <label for="field_required_<?php echo $index; ?>" class="form-check-label">Required: </label>
                       <input type="checkbox" class="form-check-input" name="field_required[]" <?php echo ($field->field_required) ? 'checked' : ''; ?>>
                     </div>
-                  <?php endif; ?>
-                </div>
               <?php endforeach; ?>
               <div class="d-grid gap-2"><button type="submit" class="btn btn-lg btn-success ">Update Form</button></div>
 
