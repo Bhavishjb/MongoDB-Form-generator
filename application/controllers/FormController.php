@@ -14,9 +14,9 @@ class FormController extends CI_Controller
 
     public function index()
     {
-      if (!$this->session->userdata('user_id')) {
-        redirect('login');
-      }
+        if (!$this->session->userdata('user_id')) {
+            redirect('login');
+        }
         // Load the Forms_model
         $this->load->model('Forms_model');
 
@@ -88,9 +88,9 @@ class FormController extends CI_Controller
 
     public function view_forms()
     {
-      if (!$this->session->userdata('user_id')) {
-        redirect('login');
-      }
+        if (!$this->session->userdata('user_id')) {
+            redirect('login');
+        }
         $data['forms'] = $this->Forms_model->get_all_forms();
 
         $this->load->view('templates/header');
@@ -99,9 +99,9 @@ class FormController extends CI_Controller
     }
     public function display_form($clg_id)
     {
-      if (!$this->session->userdata('user_id')) {
-        redirect('login');
-      }
+        if (!$this->session->userdata('user_id')) {
+            redirect('login');
+        }
         // Retrieve form details from MongoDB based on $form_id
         $form_data = $this->Forms_model->get_forms_by_clg_id($clg_id);
 
@@ -121,9 +121,9 @@ class FormController extends CI_Controller
 
     public function remove_form($form_id)
     {
-      if (!$this->session->userdata('user_id')) {
-        redirect('login');
-      }
+        if (!$this->session->userdata('user_id')) {
+            redirect('login');
+        }
         // Show a confirmation message to the user if needed, but we already did this in JavaScript.
 
         // Call the model's method to delete the form by ID
@@ -139,9 +139,9 @@ class FormController extends CI_Controller
     }
     public function edit_form($form_id)
     {
-      if (!$this->session->userdata('user_id')) {
-        redirect('login');
-      }
+        if (!$this->session->userdata('user_id')) {
+            redirect('login');
+        }
         // Retrieve form details from MongoDB based on $form_id
         $form_data = $this->Forms_model->get_form($form_id);
 
@@ -165,9 +165,9 @@ class FormController extends CI_Controller
     }
     public function update_form($form_id)
     {
-      if (!$this->session->userdata('user_id')) {
-        redirect('login');
-      }
+        if (!$this->session->userdata('user_id')) {
+            redirect('login');
+        }
         // Retrieve form data from the submitted form
         $form_title = $this->input->post('form_title');
         $form_description = $this->input->post('form_description');
@@ -223,9 +223,9 @@ class FormController extends CI_Controller
     }
     public function generate_form($form_id)
     {
-      if (!$this->session->userdata('user_id')) {
-        redirect('login');
-      }
+        if (!$this->session->userdata('user_id')) {
+            redirect('login');
+        }
         // Retrieve form details from MongoDB based on $form_id
         $form_data = $this->Forms_model->get_form($form_id);
 
