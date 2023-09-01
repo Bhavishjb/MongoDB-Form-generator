@@ -54,8 +54,14 @@
         Simplify form creation and data collection with our powerful tool. Design custom forms tailored to your needs and manage them effortlessly.
       </p>
       <div>
-        <a href="<?php echo base_url('FormController/index'); ?>" class="btn btn-create-form">Create Your Form</a>
-        <a href="<?php echo base_url(); ?>/FormController/display_form/<?php echo $this->session->userdata('user_id'); ?>" class="btn btn-form-list">Form Lists</a>
+        <?php if (!$this->session->userdata('user_id')) : ?>
+          <a href="<?php echo base_url('login'); ?>" class="btn btn-create-form">Create Your Form</a>
+          <a href="<?php echo base_url('login'); ?>" class="btn btn-form-list">Form Lists</a>
+        <?php endif; ?>
+        <?php if ($this->session->userdata('user_id')) : ?>
+          <a href="<?php echo base_url('FormController/index'); ?>" class="btn btn-create-form">Create Your Form</a>
+          <a href="<?php echo base_url(); ?>/FormController/display_form/<?php echo $this->session->userdata('user_id'); ?>" class="btn btn-form-list">Form Lists</a>
+        <?php endif; ?>
       </div>
 
     </div>
