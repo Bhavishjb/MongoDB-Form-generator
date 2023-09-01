@@ -105,17 +105,13 @@ class FormController extends CI_Controller
         // Retrieve form details from MongoDB based on $form_id
         $form_data = $this->Forms_model->get_forms_by_clg_id($clg_id);
 
-        if ($form_data) {
-            $data['form_data'] = $form_data; // Pass the data to the view
 
-            // Load the display_form view with form data
-            $this->load->view('templates/header');
-            $this->load->view('display_form', $data);
-            $this->load->view('templates/footer');
-        } else {
-            // Handle form not found error
-            show_error('Form not found', 404);
-        }
+        $data['form_data'] = $form_data; // Pass the data to the view
+
+        // Load the display_form view with form data
+        $this->load->view('templates/header');
+        $this->load->view('display_form', $data);
+        $this->load->view('templates/footer');
     }
 
 
