@@ -31,8 +31,7 @@ class Login extends CI_Controller
             $this->load->view('templates/header');
             $this->load->view('login_form');
             $this->load->view('templates/footer');
-        } 
-        else {
+        } else {
             // Validation successful, proceed with login
             $email = $this->input->post('email');
             $password = $this->input->post('password');

@@ -90,7 +90,7 @@ class FormController extends CI_Controller
         $data['forms'] = $this->Forms_model->get_all_forms();
 
         $this->load->view('templates/header');
-        $this->load->view('forms_view', $data); 
+        $this->load->view('forms_view', $data);
         $this->load->view('templates/footer');
     }
     public function display_form($clg_id)
@@ -115,7 +115,7 @@ class FormController extends CI_Controller
         if (!$this->session->userdata('user_id')) {
             redirect('login');
         }
-      
+
         // Call the model's method to delete the form by ID
         $deleted = $this->Forms_model->delete_form($form_id);
 
@@ -137,7 +137,7 @@ class FormController extends CI_Controller
         $form_data = $this->Forms_model->get_form($form_id);
 
         if ($form_data) {
-          
+
             // Load the edit_form view and pass form_data
             $data['form_data'] = $form_data;
             // Load the edit_form_view.php view with prepopulated data
