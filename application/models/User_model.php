@@ -31,7 +31,8 @@ class User_model extends CI_model
             }
 
             return null; // No user found
-        } catch (MongoDB\Driver\Exception\RuntimeException $ex) {
+        } 
+        catch (MongoDB\Driver\Exception\RuntimeException $ex) {
             show_error('Error while fetching user: ' . $ex->getMessage(), 500);
         }
     }
@@ -42,13 +43,11 @@ class User_model extends CI_model
             $user = array(
                 'name' => $name,
                 'email' => $email,
-                //'username' => $username,
                 'password' => $password
             );
 
             // Define the collection name for user registration
             $collectionName = 'College_register';
-
 
             $this->createCollectionIfNotExists($collectionName);
 
@@ -60,9 +59,9 @@ class User_model extends CI_model
             if ($result == 1) {
                 return true;
             }
-
             return false;
-        } catch (MongoDB\Driver\Exception\RuntimeException $ex) {
+        } 
+        catch (MongoDB\Driver\Exception\RuntimeException $ex) {
             show_error('Error while saving users: ' . $ex->getMessage(), 500);
         }
     }
@@ -84,7 +83,7 @@ class User_model extends CI_model
 
     public function is_username_taken($email)
     {
-        //$collectionName = 'user_registration';
+      
         $filter = ['email' => $email];
         $query = new MongoDB\Driver\Query($filter);
         $cursor = $this->conn->executeQuery($this->database . '.' . $collection, $query);

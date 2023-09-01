@@ -6,7 +6,6 @@ class Fields_model extends CI_Model
 {
     private $collection = 'fields';
     public $database = 'College-DataBase';
-
     private $conn;
 
     public function __construct()
@@ -34,7 +33,6 @@ class Fields_model extends CI_Model
     {
         return $this->mongo_db->where('_id', new MongoDB\BSON\ObjectId($field_id))->delete($this->collection);
     }
-
     public function get_all_fields()
     {
         return $this->mongo_db->get($this->collection);

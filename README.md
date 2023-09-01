@@ -1,8 +1,8 @@
 # MongoDB-Form-generator
+
 Create college forms effortlessly with the MongoDB-Form-generator. Powered by CodeIgniter and MongoDB, build dynamic forms, validate data, and manage applicants securely. Modernize your admission process using this efficient and scalable solution.
 
 # College Dynamic Form Generator
-
 
 ## Table of Contents
 
@@ -62,6 +62,7 @@ The College Dynamic Form Generator is a versatile web application designed to fa
 1. Clone the repository:
    ```bash
    git clone git@github.com:Bhavishjb/MongoDB-Form-generator.git
+   ```
 2. Install dependencies and configure your web server:
 3. Setup Xampp or Wamp Server .
 4. Follow the CodeIgniter setup guide for configuration.
@@ -73,6 +74,7 @@ Import the MongoDB collections using the provided scripts or commands.
 [Add any additional setup instructions]
 
 ## Usage
+
 1. Register or log in using your college credentials.
 2. Create, edit, or delete form templates to suit your needs.
 3. Generate dynamic forms from selected templates with appropriate fields.
@@ -84,4 +86,4 @@ Contributions are welcome! If you encounter issues or have suggestions, please o
 
 1. [Bhavish Kerkera](https://github.com/Bhavishjb)
 
-2. [C S ShravanKumar](https://github.com/Shravan-7)
+2. [C S Shravan Kumar](https://github.com/Shravan-7)

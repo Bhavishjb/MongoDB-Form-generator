@@ -12,9 +12,9 @@
       <div class="col-md-10">
         <div class="card">
           <div class="card-body">
-
             <div class="container mt-4">
               <h1 style="text-align:center;">Edit Form Elements</h1>
+
               <?php echo form_open('FormController/update_form/' . $form_data->_id); ?>
               <div class="form-group mt-5">
                 <label for="form_title">Form Title:</label>
@@ -44,49 +44,53 @@
 
                   <?php if (in_array($field->field_type, array('Dropdown', 'Checkbox', 'Radio'))) : ?>
                     <div class="option-fields">
-                    <label class="form-label mt-3">Options:</label>
-                        <?php foreach ($field->options as $option_index => $option_value) : ?>
-                            <div class="option-field">
-                                <div class="row">
-                                    <div class="col-md-5">
-                                        <input type="text" class="form-control" name="option_value[<?php echo $index; ?>][]" value="<?php echo $option_value; ?>" placeholder="Option Value">
-                                    </div>
-                                    <div class="col-md-2">
-                                        <?php if ($option_index > 0) : ?>
-                                            <button type="button" class="btn btn-sm btn-danger remove-option">Remove</button>
-                                        <?php endif; ?>
-                                    </div>
-                                </div>
-                            </div>
-                        <?php endforeach; ?>
-                    </div>
-                    <button type="button" class="btn btn-sm btn-primary mt-2 add-option">Add Option</button>
-                <?php else: ?>
-                    <div class="option-fields" style="display: none;">
-                    <label class="form-label mt-3">Options:</label>
+                      <label class="form-label mt-3">Options:</label>
+                      <?php foreach ($field->options as $option_index => $option_value) : ?>
                         <div class="option-field">
-                            <div class="row">
-                                <div class="col-md-5">
-                                    <input type="text" class="form-control" name="option_value[<?php echo $index; ?>][]" placeholder="Option Value">
-                                </div>
-                                <div class="col-md-2">
-                                    <button type="button" class="btn btn-sm btn-danger remove-option">Remove</button>
-                                </div>
+                          <div class="row">
+                            <div class="col-md-5">
+                              <input type="text" class="form-control" name="option_value[<?php echo $index; ?>][]" value="<?php echo $option_value; ?>" placeholder="Option Value">
                             </div>
+                            <div class="col-md-2">
+                              <?php if ($option_index > 0) : ?>
+                                <button type="button" class="btn btn-sm btn-danger remove-option">Remove</button>
+                              <?php endif; ?>
+                            </div>
+                          </div>
                         </div>
+                      <?php endforeach; ?>
+
                     </div>
                     <button type="button" class="btn btn-sm btn-primary mt-2 add-option">Add Option</button>
-                <?php endif; ?>
+                  <?php else : ?>
+                    <div class="option-fields" style="display: none;">
+                      <label class="form-label mt-3">Options:</label>
+                      <div class="option-field">
+                        <div class="row">
+                          <div class="col-md-5">
+                            <input type="text" class="form-control" name="option_value[<?php echo $index; ?>][]" placeholder="Option Value">
+                          </div>
+                          <div class="col-md-2">
+                            <button type="button" class="btn btn-sm btn-danger remove-option">Remove</button>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <button type="button" class="btn btn-sm btn-primary mt-2 add-option">Add Option</button>
+                  <?php endif; ?>
+
                 </div>
                 <div class="size-length mt-2">
-                    <label class="form-label mt-4">Size/Length:</label>
-                    <input type="number" class="form-control" name="size_length[]" placeholder="Enter Size/Length" value="<?php echo($field->size_length); ?>">
+                  <label class="form-label mt-4">Size/Length:</label>
+                  <input type="number" class="form-control" name="size_length[]" placeholder="Enter Size/Length" value="<?php echo ($field->size_length); ?>">
                 </div>
+
                 <div class=" mt-4 mb-5">
-                      <label for="field_required_<?php echo $index; ?>" class="form-check-label">Required: </label>
-                      <input type="checkbox" class="form-check-input" name="field_required[]" <?php echo ($field->field_required) ? 'checked' : ''; ?>>
-                    </div>
+                  <label for="field_required_<?php echo $index; ?>" class="form-check-label">Required: </label>
+                  <input type="checkbox" class="form-check-input" name="field_required[]" <?php echo ($field->field_required) ? 'checked' : ''; ?>>
+                </div>
               <?php endforeach; ?>
+
               <div class="d-grid gap-2"><button type="submit" class="btn btn-lg btn-success ">Update Form</button></div>
 
               <?php echo form_close(); ?>
@@ -100,5 +104,4 @@
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
   <script src="<?php echo base_url(); ?>assets/js/edit-form-js.js"></script>
 </body>
-
 </html>

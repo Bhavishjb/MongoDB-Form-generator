@@ -3,7 +3,6 @@
 
 <head>
     <title>Registration</title>
-    <!-- Add Bootstrap CSS link here -->
     <link rel="stylesheet" href="https://bootswatch.com/5/flatly/bootstrap.min.css">
 </head>
 
@@ -24,7 +23,7 @@
                         }
                         ?>
                         <script>
-                            // Automatically hide the flash message after 5 seconds (5000 milliseconds)
+                            // Automatically hide the flash message after 5 seconds
                             setTimeout(function() {
                                 var flashMessage = document.getElementById('flash-message');
                                 if (flashMessage) {
