@@ -82,5 +82,5 @@ Import the MongoDB collections using the provided scripts or commands.
 
 Contributions are welcome! If you encounter issues or have suggestions, please open an issue or submit a pull request.
 
-[Bhavish Kerkera]{https://github.com/Bhavishjb}
-[C S ShravanKumar]{https://github.com/Shravan-7}
+[Bhavish Kerkera](https://github.com/Bhavishjb)
+[C S ShravanKumar](https://github.com/Shravan-7)
