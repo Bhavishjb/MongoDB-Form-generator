@@ -22,6 +22,7 @@ class FormController extends CI_Controller
 
         // Handle form submission
         if ($this->input->post()) {
+
             // Collect form data
             $clg_id = $this->session->userdata('user_id');
             $form_title = $this->input->post('form_title');
@@ -41,14 +42,13 @@ class FormController extends CI_Controller
                 'fields' => array(),
             );
 
-
             for ($i = 0; $i < count($field_labels); $i++) {
                 if (!($size_length[$i])) {
                     $size_length[$i] = 255;
                 }
             }
-            for ($i = 0; $i < count($field_labels); $i++) {
 
+            for ($i = 0; $i < count($field_labels); $i++) {
                 $field = array(
                     'field_label' => $field_labels[$i],
                     'field_type' => $field_types[$i],
@@ -73,7 +73,6 @@ class FormController extends CI_Controller
                 $clg_id = $this->session->userdata('user_id');
                 redirect('display_form/' . urlencode($clg_id));
             } else {
-                //var_dump($option_values);
                 redirect('home');
             }
         }
@@ -84,8 +83,6 @@ class FormController extends CI_Controller
         $this->load->view('templates/footer');
     }
 
-
-
     public function view_forms()
     {
         if (!$this->session->userdata('user_id')) {
@@ -94,7 +91,7 @@ class FormController extends CI_Controller
         $data['forms'] = $this->Forms_model->get_all_forms();
 
         $this->load->view('templates/header');
-        $this->load->view('forms_view', $data); // Create this view file
+        $this->load->view('forms_view', $data); 
         $this->load->view('templates/footer');
     }
     public function display_form($clg_id)
@@ -102,6 +99,7 @@ class FormController extends CI_Controller
         if (!$this->session->userdata('user_id')) {
             redirect('login');
         }
+
         // Retrieve form details from MongoDB based on $form_id
         $form_data = $this->Forms_model->get_forms_by_clg_id($clg_id);
 
@@ -113,22 +111,20 @@ class FormController extends CI_Controller
         $this->load->view('display_form', $data);
         $this->load->view('templates/footer');
     }
-
-
     public function remove_form($form_id)
     {
         if (!$this->session->userdata('user_id')) {
             redirect('login');
         }
-        // Show a confirmation message to the user if needed, but we already did this in JavaScript.
-
+      
         // Call the model's method to delete the form by ID
         $deleted = $this->Forms_model->delete_form($form_id);
 
         if ($deleted) {
-            // Form was successfully deleted, you can redirect to a success page or another action
+            // Form was successfully deleted, redirect to a  another action
             redirect('display_form/' . urlencode($this->session->userdata('user_id')));
         } else {
+
             // Handle deletion error
             show_error('Error while deleting the form', 500);
         }
@@ -142,12 +138,7 @@ class FormController extends CI_Controller
         $form_data = $this->Forms_model->get_form($form_id);
 
         if ($form_data) {
-            // 	// Extract data for prepopulating the form fields
-            // 	$data['form_id'] = $form_id;
-            // 	$data['form_title'] = $form_data->form_title;
-            // 	$data['form_description'] = $form_data->form_description;
-            // 	$data['form_fields'] = $form_data->fields;
-
+          
             // Load the edit_form view and pass form_data
             $data['form_data'] = $form_data;
             // Load the edit_form_view.php view with prepopulated data
@@ -200,20 +191,18 @@ class FormController extends CI_Controller
                 }
                 $field['options'] = $field_options;
             }
-
             $updated_form_data['fields'][] = $field;
         }
 
-        // Now, update the form in the database using the Forms_model
+        // update the form in the database using the Forms_model
         $update_result = $this->Forms_model->update_form($form_id, $updated_form_data);
 
         if ($update_result) {
-            // Update successful, you can redirect to a success page or back to the form list
+            // Update successful, redirect back to the form list
             $clg_id = $this->session->userdata('user_id');
             redirect('FormController/display_form/' . urlencode($clg_id)); // Adjust the URL as needed
         } else {
-            // Handle update failure, maybe show an error message
-            // You can also add error handling in your update_form method in Forms_model
+            // Handle update failure
             show_error('Form update failed', 500);
         }
     }

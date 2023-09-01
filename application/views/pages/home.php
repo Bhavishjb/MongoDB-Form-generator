@@ -11,13 +11,11 @@
       color: #fff;
       padding: 50px 0;
     }
-
     .intro-heading {
       font-size: 36px;
       font-weight: bold;
       margin-bottom: 20px;
     }
-
     .intro-description {
       font-size: 18px;
     }
@@ -32,11 +30,8 @@
       border: none;
       margin-top: 20px;
     }
-
     .btn-form-list {
       background-color: orange;
-
-
       color: #fff;
       font-size: 24px;
       padding: 20px 80px;
@@ -45,7 +40,6 @@
     }
   </style>
 </head>
-
 <body>
   <div class="container-fluid intro-section">
     <div class="container text-center">
@@ -63,9 +57,7 @@
           <a href="<?php echo base_url(); ?>/FormController/display_form/<?php echo $this->session->userdata('user_id'); ?>" class="btn btn-form-list">Form Lists</a>
         <?php endif; ?>
       </div>
-
     </div>
   </div>
 </body>
-
 </html>

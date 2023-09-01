@@ -14,8 +14,6 @@ class Register extends CI_Controller
     public function index()
     {
         // Load your registration form view here
-
-
         $this->load->view('templates/header');
         $this->load->view('register_form');
         $this->load->view('templates/footer');
@@ -26,7 +24,6 @@ class Register extends CI_Controller
         // Form validation rules
         $this->form_validation->set_rules('name', 'Name', 'trim|required');
         $this->form_validation->set_rules('email', 'Email', 'trim|required|valid_email');
-        //$this->form_validation->set_rules('username', 'Username', 'trim|required');
         $this->form_validation->set_rules('password', 'Password', 'trim|required|min_length[8]');
         $this->form_validation->set_rules('confirm_password', 'Confirm Password', 'trim|required|matches[password]');
 
@@ -37,7 +34,6 @@ class Register extends CI_Controller
             $this->load->view('templates/footer');
         } else {
             // Validation successful, check for duplicate username and email
-            //$username = $this->input->post('username');
             $email = $this->input->post('email');
 
             if ($this->User_model->is_email_taken($email)) {

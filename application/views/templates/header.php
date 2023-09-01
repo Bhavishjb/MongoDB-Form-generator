@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html>
-
 <head>
   <title>User</title>
   <link rel="stylesheet" href="https://bootswatch.com/5/flatly/bootstrap.min.css">
@@ -29,7 +28,6 @@
       <button class="navbar-toggler collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#navbarColor01" aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
-
       <div class="navbar-collapse collapse" id="navbarColor01">
         <ul class="navbar-nav me-auto">
           <li class="nav-item">
@@ -53,8 +51,8 @@
           <?php if ($this->session->userdata('user_id')) : ?>
             <li class="nav-item"><a class="nav-link" href="<?php echo base_url('formcontroller/index'); ?>">CREATE-FORM</a></li>
             <li class="nav-item"><a class="nav-link" href="<?php echo base_url('login/logout'); ?>">LOGOUT</a></li>
-
           <?php endif; ?>
+
         </ul>
       </div>
     </div>
@@ -69,11 +67,11 @@
     <?php if ($this->session->flashdata('user_loggedin')) : ?>
       <?php echo '<p class="alert alert-success">' . $this->session->flashdata('user_loggedin') . '</p>'; ?>
     <?php endif; ?>
+
     <?php if ($this->session->flashdata('user_loggedout')) : ?>
       <?php echo '<p class="alert alert-success">' . $this->session->flashdata('user_loggedout') . '</p>'; ?>
     <?php endif; ?>
   </div>
-
 
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.10.2/umd/popper.min.js"></script>
@@ -85,7 +83,5 @@
       });
     });
   </script>
-
 </body>
-
 </html>

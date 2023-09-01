@@ -1,10 +1,8 @@
-<!-- display_form.php -->
 <!DOCTYPE html>
 <html>
-
 <head>
-    <title>Display Form</title>
-    <link rel="stylesheet" href="https://bootswatch.com/5/flatly/bootstrap.min.css">
+  <title>Display Form</title>
+  <link rel="stylesheet" href="https://bootswatch.com/5/flatly/bootstrap.min.css">
 </head>
 
 <body>
@@ -60,7 +58,7 @@
                         </div>
                     </div>
                 </div>
-            </div>
+             </div>
         </div>
     </div>
     </div>
@@ -72,5 +70,4 @@
         }
     </script>
 </body>
-
 </html>
