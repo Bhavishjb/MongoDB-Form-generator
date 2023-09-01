@@ -13,8 +13,8 @@
         <div class="card">
           <div class="card-body">
             <div class="container mt-4">
-              <h1 class="text-center" style="font-size:5rem;"> <?php echo $form_data->form_title; ?></h1>
-              <h4 class="mb-4 mt-4">Form Description: <?php echo $form_data->form_description; ?></h4>
+              <h1 class="text-center mb-5" style="font-size:4rem;"> <?php echo $form_data->form_title; ?></h1>
+              <h4 class="mb-5 mt-5">Form Description: <?php echo $form_data->form_description; ?></h4>
 
               <?php foreach ($form_data->fields as $field) : ?>
                 <div class="form-group mt-4">
