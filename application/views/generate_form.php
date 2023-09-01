@@ -29,11 +29,52 @@
                     'class' => 'form-control'
                   );
 
-                  if ($field->field_required === '1') {
+                  if ($field->field_required === 'on') {
                       $attributes['required'] = 'required';
                   }
 
-                  if ($field->field_type === 'Textbox' || $field->field_type === 'Email' || $field->field_type === 'Date') {
+                  if ($field->field_type === 'Email') {
+                      $field_name = 'Email';
+                      $field_id = str_replace(' ', '_', strtolower($field_name));
+                      $attributes = array(
+                          'name' => $field_name,
+                          'id' => $field_id,
+                          'class' => 'form-control'
+                      );
+
+                      if ($field->field_required === 'on') {
+                          $attributes['required'] = 'required';
+                      }
+                      echo '<input type="email" ' . implode(' ', array_map(function ($key, $value) {
+                          return $key . '="' . $value . '"';
+                      }, array_keys($attributes), $attributes)) . '>';
+                  } elseif ($field->field_type === 'Date') {
+                      $field_name = 'Date';
+                      $field_id = str_replace(' ', '_', strtolower($field_name));
+                      $attributes = array(
+                          'name' => $field_name,
+                          'id' => $field_id,
+                          'class' => 'form-control'
+                      );
+
+                      if ($field->field_required === 'on') {
+                          $attributes['required'] = 'required';
+                      }
+                      echo '<input type="date" ' . implode(' ', array_map(function ($key, $value) {
+                          return $key . '="' . $value . '"';
+                      }, array_keys($attributes), $attributes)) . '>';
+                  } elseif ($field->field_type === 'Textbox') {
+                      $field_name = 'Text';
+                      $field_id = str_replace(' ', '_', strtolower($field_name));
+                      $attributes = array(
+                        'name' => $field_name,
+                        'id' => $field_id,
+                        'class' => 'form-control'
+                      );
+
+                      if ($field->field_required === 'on') {
+                          $attributes['required'] = 'required';
+                      }
                       echo form_input($attributes);
                   } elseif ($field->field_type === 'Textarea') {
                       echo form_textarea($attributes);
