@@ -82,7 +82,7 @@
                 </div>
                 <div class="size-length mt-2">
                   <label class="form-label mt-4">Size/Length:</label>
-                  <input type="number" class="form-control" name="size_length[]" placeholder="Enter Size/Length" value="<?php echo ($field->size_length); ?>">
+                  <input type="number" class="form-control" name="size_length[]" placeholder="Enter Size/Length" value="<?php echo($field->size_length); ?>">
                 </div>
 
                 <div class=" mt-4 mb-5">

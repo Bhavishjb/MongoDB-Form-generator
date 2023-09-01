@@ -18,9 +18,9 @@
                 <?php
                 $user_id = $this->session->userdata('user_id');
                 if ($user_id !== null) {
-                  echo "College ID: " . $user_id;
+                    echo "College ID: " . $user_id;
                 } else {
-                  echo "College ID not set.";
+                    echo "College ID not set.";
                 }
                 ?>
               </h4>

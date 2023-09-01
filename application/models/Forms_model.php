@@ -28,8 +28,7 @@ class Forms_model extends CI_Model
             }
 
             return false;
-        } 
-        catch (MongoDB\Driver\Exception\RuntimeException $ex) {
+        } catch (MongoDB\Driver\Exception\RuntimeException $ex) {
             show_error('Error while saving form: ' . $ex->getMessage(), 500);
         }
     }
@@ -44,8 +43,7 @@ class Forms_model extends CI_Model
                 return $document;
             }
             return null;
-        } 
-        catch (MongoDB\Driver\Exception\RuntimeException $ex) {
+        } catch (MongoDB\Driver\Exception\RuntimeException $ex) {
             show_error('Error while fetching form: ' . $ex->getMessage(), 500);
         }
     }
@@ -60,8 +58,7 @@ class Forms_model extends CI_Model
                 $forms[] = $document;
             }
             return $forms;
-        } 
-        catch (MongoDB\Driver\Exception\RuntimeException $ex) {
+        } catch (MongoDB\Driver\Exception\RuntimeException $ex) {
             show_error('Error while fetching forms: ' . $ex->getMessage(), 500);
         }
     }
@@ -76,8 +73,7 @@ class Forms_model extends CI_Model
                 return $document;
             }
             return null;
-        } 
-        catch (MongoDB\Driver\Exception\RuntimeException $ex) {
+        } catch (MongoDB\Driver\Exception\RuntimeException $ex) {
             show_error('Error while fetching form: ' . $ex->getMessage(), 500);
         }
     }
@@ -97,8 +93,7 @@ class Forms_model extends CI_Model
                 return true;
             }
             return false;
-        } 
-        catch (MongoDB\Driver\Exception\RuntimeException $ex) {
+        } catch (MongoDB\Driver\Exception\RuntimeException $ex) {
             show_error('Error while updating form: ' . $ex->getMessage(), 500);
         }
     }
