@@ -8,7 +8,6 @@ class FormController extends CI_Controller
     {
         parent::__construct();
         $this->load->model('Forms_model');
-        $this->load->model('Fields_model');
         $this->load->library('form_validation');
     }
 
