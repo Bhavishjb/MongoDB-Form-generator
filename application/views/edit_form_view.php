@@ -45,23 +45,38 @@
                   <?php if (in_array($field->field_type, array('Dropdown', 'Checkbox', 'Radio'))) : ?>
                     <label class="form-label mt-3">Options:</label>
                     <div class="option-fields">
-                      <?php foreach ($field->options as $option_index => $option_value) : ?>
-                        <div class="option-field">
-                          <div class="row">
-                            <div class="col-md-5">
-                              <input type="text" class="form-control" name="option_value[<?php echo $index; ?>][]" value="<?php echo $option_value; ?>" placeholder="Option Value">
+                        <?php foreach ($field->options as $option_index => $option_value) : ?>
+                            <div class="option-field">
+                                <div class="row">
+                                    <div class="col-md-5">
+                                        <input type="text" class="form-control" name="option_value[<?php echo $index; ?>][]" value="<?php echo $option_value; ?>" placeholder="Option Value">
+                                    </div>
+                                    <div class="col-md-2">
+                                        <?php if ($option_index > 0) : ?>
+                                            <button type="button" class="btn btn-sm btn-danger remove-option">Remove</button>
+                                        <?php endif; ?>
+                                    </div>
+                                </div>
                             </div>
-                            <div class="col-md-2">
-                              <?php if ($option_index > 0) : ?>
-                                <button type="button" class="btn btn-sm btn-danger remove-option">Remove</button>
-                              <?php endif; ?>
-                            </div>
-                          </div>
-                        </div>
-                      <?php endforeach; ?>
+                        <?php endforeach; ?>
+                        <button type="button" class="btn btn-sm btn-primary mt-2 add-option">Add Option</button>
                     </div>
-                    <button type="button" class="btn btn-sm btn-primary mt-2 add-option">Add Option</button>
-                  <?php endif; ?>
+                <?php else: ?>
+                    <label class="form-label mt-3" >Options:</label>
+                    <div class="option-fields" style="display: none;">
+                        <div class="option-field">
+                            <div class="row">
+                                <div class="col-md-5">
+                                    <input type="text" class="form-control" name="option_value[<?php echo $index; ?>][]" placeholder="Option Value">
+                                </div>
+                                <div class="col-md-2">
+                                    <button type="button" class="btn btn-sm btn-danger remove-option">Remove</button>
+                                </div>
+                            </div>
+                        </div>
+                        <button type="button" class="btn btn-sm btn-primary mt-2 add-option">Add Option</button>
+                    </div>
+                <?php endif; ?>
                 </div>
                 <div class="size-length mt-2">
                     <label class="form-label mt-4">Size/Length:</label>
@@ -82,6 +97,7 @@
     </div>
   </div>
 
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
   <script>
     document.addEventListener('DOMContentLoaded', function() {
       const addOptionButtons = document.querySelectorAll('.add-option');
@@ -126,6 +142,21 @@
         button.closest('.option-field').remove();
       }
     });
+    $(document).ready(function() {
+    $('select[name="field_type[]"]').on('change', function() {
+        var selectedFieldType = $(this).val();
+        var optionFields = $('.option-fields');
+        var addOptionButton = $('.add-option');
+
+        if (selectedFieldType === 'Dropdown' || selectedFieldType === 'Checkbox' || selectedFieldType === 'Radio') {
+            optionFields.show();
+            addOptionButton.show();
+        } else {
+            optionFields.hide();
+            addOptionButton.hide();
+        }
+    });
+});
   </script>
 </body>
 
