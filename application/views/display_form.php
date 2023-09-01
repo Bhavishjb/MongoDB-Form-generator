@@ -15,6 +15,7 @@
                     <div class="card-body">
                         <div class="container">
                             <h2 style="text-align:center;">Form Details</h2>
+                            <?php if ($form_data !== []) : ?>
                             <?php foreach ($form_data as $form) : ?>
                                 <br /><br /><br />
                                 <h3 class="mb-4">Form Title: <?php echo $form->form_title; ?></h3>
@@ -51,6 +52,11 @@
                                 <hr>
                                 
                             <?php endforeach; ?>
+                            <?php  else: ?>
+                                <div style="display: flex; justify-content: center; align-items: center; height: 100vh;">
+                                    <h3 style="color: grey;">No form avilable</h3>
+                                </div>
+                            <?php endif; ?>
                         </div>
                     </div>
                 </div>
