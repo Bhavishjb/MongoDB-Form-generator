@@ -37,9 +37,11 @@
               <span class="visually-hidden">(current)</span>
             </a>
           </li>
-          <li class="nav-item">
-            <a class="nav-link" href="<?php echo base_url(); ?>/FormController/display_form/<?php echo $this->session->userdata('user_id'); ?>">FORMS</a>
-          </li>
+          <?php if ($this->session->userdata('user_id')) : ?>
+            <li class="nav-item">
+              <a class="nav-link" href="<?php echo base_url(); ?>/FormController/display_form/<?php echo $this->session->userdata('user_id'); ?>">FORMS</a>
+            </li>
+          <?php endif; ?>
         </ul>
 
         <ul class="navbar-nav ml-auto"> <!-- Moved navbar-right class to this ul -->
@@ -72,7 +74,7 @@
     <?php endif; ?>
   </div>
 
-  <!-- Make sure you have included Bootstrap JavaScript and jQuery libraries -->
+
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.10.2/umd/popper.min.js"></script>
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/5.7.0/js/bootstrap.min.js"></script>
