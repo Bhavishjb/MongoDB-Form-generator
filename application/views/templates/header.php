@@ -33,16 +33,14 @@
       <div class="navbar-collapse collapse" id="navbarColor01">
         <ul class="navbar-nav me-auto">
           <li class="nav-item">
-            <a class="nav-link" href="<?php echo base_url('/FormController/index'); ?>">HOME
+            <a class="nav-link" href="<?php echo base_url('/homecontroller/index'); ?>">HOME
               <span class="visually-hidden">(current)</span>
             </a>
           </li>
           <li class="nav-item">
             <a class="nav-link" href="<?php echo base_url(); ?>/FormController/display_form/<?php echo $this->session->userdata('user_id'); ?>">FORMS</a>
           </li>
-          <li class="nav-item">
-            <a class="nav-link" href="<?php echo base_url(); ?>about">ABOUT</a>
-          </li>
+          
         </ul>
 
 
